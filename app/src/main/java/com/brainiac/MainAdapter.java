@@ -49,7 +49,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         //holder.mView.setText(mDataset[position]);
-
+        TextView tv = (TextView) LayoutInflater.from(holder.mView.getContext())
+                .inflate(R.layout.content_main, null).findViewById(R.id.info_text);
+        tv.setText(mDataset[position]);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
