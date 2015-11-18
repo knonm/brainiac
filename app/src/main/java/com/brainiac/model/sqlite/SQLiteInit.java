@@ -25,6 +25,7 @@ public class SQLiteInit extends SQLiteOpenHelper {
             "CREATE TABLE EVENTO_LUGAR (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "id_evento INTEGER NOT NULL, " +
+                    "nome_local TEXT NOT NULL," +
                     "lat REAL NOT NULL, " +
                     "long REAL NOT NULL, " +
                     "FOREIGN KEY(id_evento) REFERENCES EVENTO(id)" +
@@ -36,6 +37,13 @@ public class SQLiteInit extends SQLiteOpenHelper {
                     "id_evento INTEGER NOT NULL, " +
                     "horario_ini REAL NOT NULL, " +
                     "horario_fim REAL NOT NULL, " +
+                    "rec_dom INTEGER, " +
+                    "rec_seg INTEGER, " +
+                    "rec_ter INTEGER, " +
+                    "rec_qua INTEGER, " +
+                    "rec_qui INTEGER, " +
+                    "rec_sex INTEGER, " +
+                    "rec_sab INTEGER, " +
                     "FOREIGN KEY(id_evento) REFERENCES EVENTO(id)" +
                     ")";
 

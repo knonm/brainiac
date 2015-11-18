@@ -12,83 +12,202 @@
 
         <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
             android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Configuração do lembrete"
+                android:id="@+id/textView6"
+                android:textStyle="bold" />
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_height="wrap_content" android:layout_width="match_parent"
-        android:layout_below="@+id/view" android:orientation="vertical"
-        android:layout_margin="10dp" android:id="@+id/lin_lay_1">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Nome:"
-            android:id="@+id/textView" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText" />
+        android:layout_below="@+id/view"
+        android:layout_margin="10dp" android:id="@+id/lin_lay_1"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Título:"
+                android:id="@+id/textView" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Me lembrar em:"
+            android:id="@+id/textView4"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Dia da semana:"
+            android:id="@+id/textView5"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="-10dp"
+            android:layout_marginTop="20dp" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:baselineAligned="false"
+            android:clickable="true"
+            android:foreground="#ffffff"
+            android:background="#ffffff"
+            android:foregroundTint="#ffffff"
+            android:visibility="visible"
+            android:layout_marginLeft="70dp"
+            android:layout_gravity="right"
+            android:foregroundGravity="center_horizontal"
+            android:columnOrderPreserved="true"
+            android:layout_marginRight="65dp">
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="D"
                 android:id="@+id/checkBox"
-                android:checked="false" />
+                android:checked="true"
+                android:paddingBottom="35dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="-20dp"
+                android:background="#ffffff"
+                android:foreground="#ffffff"
+                android:shadowColor="#0033ff"
+                android:singleLine="false"
+                android:clickable="true"
+                android:foregroundTint="#ffffff"
+                android:visibility="visible" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="S"
                 android:id="@+id/checkBox2"
-                android:checked="false" />
+                android:checked="true"
+                android:paddingBottom="35dp"
+                android:paddingLeft="-20dp"
+                android:paddingRight="10dp"
+                android:background="#ffffff"
+                android:foreground="#ffffff"
+                android:shadowColor="#0033ff"
+                android:singleLine="false"
+                android:clickable="true"
+                android:foregroundTint="#ffffff"
+                android:visibility="visible" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="T"
                 android:id="@+id/checkBox3"
-                android:checked="false" />
+                android:checked="true"
+                android:paddingLeft="-20dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="35dp"
+                android:background="#ffffff"
+                android:foreground="#ffffff"
+                android:shadowColor="#0033ff"
+                android:singleLine="false"
+                android:clickable="true"
+                android:foregroundTint="#ffffff"
+                android:visibility="visible" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Q"
                 android:id="@+id/checkBox4"
-                android:checked="false" />
+                android:checked="true"
+                android:paddingBottom="35dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="-20dp"
+                android:background="#ffffff"
+                android:foreground="#ffffff"
+                android:shadowColor="#0033ff"
+                android:singleLine="false"
+                android:clickable="true"
+                android:foregroundTint="#ffffff"
+                android:visibility="visible" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Q"
                 android:id="@+id/checkBox5"
-                android:checked="false" />
+                android:checked="true"
+                android:paddingLeft="-20dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="35dp"
+                android:background="#ffffff"
+                android:foreground="#ffffff"
+                android:shadowColor="#0033ff"
+                android:singleLine="false"
+                android:clickable="true"
+                android:foregroundTint="#ffffff"
+                android:visibility="visible" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="S"
                 android:id="@+id/checkBox6"
-                android:checked="false" />
+                android:checked="true"
+                android:paddingBottom="35dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="-20dp"
+                android:background="#ffffff"
+                android:foreground="#ffffff"
+                android:shadowColor="#0033ff"
+                android:singleLine="false"
+                android:clickable="true"
+                android:foregroundTint="#ffffff"
+                android:visibility="visible" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="S"
                 android:id="@+id/checkBox7"
-                android:checked="false" />
-        </LinearLayout>
+                android:checked="true"
+                android:paddingLeft="-20dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="35dp"
+                android:background="#ffffff"
+                android:foreground="#ffffff"
+                android:shadowColor="#ffffff"
+                android:singleLine="false"
+                android:foregroundTint="#ffffff"
+                android:clickable="true"
+                android:visibility="visible" />
+        </GridLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -131,7 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Horário: "
+                android:text="Hor⳩o: "
                 android:id="@+id/textView3" />
 
             <EditText
@@ -156,8 +275,19 @@
         android:text="Salvar"
         android:id="@+id/button3"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="27dp"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_marginStart="92dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_alignStart="@+id/lin_lay_1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:id="@+id/button4"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignTop="@+id/button3"
+        android:layout_toEndOf="@+id/button3" />
 
 </RelativeLayout>

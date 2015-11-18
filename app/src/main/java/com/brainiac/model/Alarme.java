@@ -40,6 +40,22 @@ public class Alarme implements Parcelable {
         this.titulo = titulo;
     }
 
+    public static transient final Parcelable.Creator<Alarme> CREATOR = new Creator<Alarme>() {
+        @Override
+        public Alarme createFromParcel(Parcel source) {
+            Alarme a = new Alarme();
+            a.id = source.readInt();
+            //a.eventos = source.createTypedArray(Evento.class);
+
+            return a;
+        }
+
+        @Override
+        public Alarme[] newArray(int size) {
+            return new Alarme[0];
+        }
+    };
+
     @Override
     public int describeContents() {
         return 0;
