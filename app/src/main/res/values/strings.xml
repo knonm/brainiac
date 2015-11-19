@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Brainiac</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_alarme">AlarmeActivity</string>
-    <string name="title_activity_lugar">LugarActivity</string>
+    <string name="title_activity_main">Brainiac</string>
+    <string name="title_activity_alarme">Configuração de alarmes</string>
+    <string name="title_activity_lugar">Lugares</string>
+    <string name="title_activity_horario">Data e horário</string>
 </resources>

@@ -70,21 +70,25 @@ public class EventoDAO {
     public void atualizar(Evento evento) {
         ContentValues values = new ContentValues();
 
-        if(evento.getEventoHorario() == null) {
-            eventoHorarioDAO.excluir(evento.getEventoHorario());
-            values.putNull(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO);
-        } else {
-            eventoHorarioDAO.atualizar(evento.getEventoHorario());
+        if(evento.getEventoHorario() != null) {
+            if(evento.getEventoHorario().getId() < 0L) {
+                eventoHorarioDAO.excluir(evento.getEventoHorario());
+                values.putNull(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO);
+            } else {
+                eventoHorarioDAO.atualizar(evento.getEventoHorario());
+            }
         }
 
-        if(evento.getEventoLugar() == null) {
-            eventoLugarDAO.excluir(evento.getEventoLugar());
-            values.putNull(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_LUGAR);
-        } else {
-            eventoLugarDAO.atualizar(evento.getEventoLugar());
+        if(evento.getEventoLugar() != null) {
+            if(evento.getEventoLugar().getId() < 0L) {
+                eventoLugarDAO.excluir(evento.getEventoLugar());
+                values.putNull(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_LUGAR);
+            } else {
+                eventoLugarDAO.atualizar(evento.getEventoLugar());
+            }
         }
 
-        if(evento.getEventoHorario() == null || evento.getEventoLugar() == null) {
+        if(evento.getEventoHorario() != null || evento.getEventoLugar() != null) {
             String selection = BrainiacContract.BDEvento.COLUMN_NAME_ID + " = ?";
             String[] selectionArgs = { String.valueOf(evento.getId()) };
 

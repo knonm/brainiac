@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +22,18 @@
         </activity>
         <activity
             android:name=".AlarmeActivity"
-            android:label="Configuração do lembrete"
+            android:label="@string/title_activity_alarme"
             android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".LugarActivity"
+            android:label="@string/title_activity_lugar"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".HorarioActivity"
+            android:label="@string/title_activity_horario"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <meta-data
@@ -32,12 +42,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCafo9Kh8_L5dF-e9d0vADPXchU9Qo8vrg" />
-
-        <activity
-            android:name=".LugarActivity"
-            android:label="@string/title_activity_lugar"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
     </application>
 
 </manifest>

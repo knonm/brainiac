@@ -3,8 +3,6 @@ package com.brainiac;
 import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.brainiac.model.Alarme;
 import com.brainiac.model.Evento;
@@ -39,12 +36,16 @@ public class AlarmeActivity extends AppCompatActivity {
     private EventoHorario eventoHorario;
     private EventoLugar eventoLugar;
 
+    private EditText edLugar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarme);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+
+        edLugar = (EditText) findViewById(R.id.editText2);
 
         if(getIntent().getFlags() == EDITAR) {
             alarme = getIntent().getParcelableExtra(ALARME_KEY);
@@ -59,7 +60,6 @@ public class AlarmeActivity extends AppCompatActivity {
             CheckBox chkQui = (CheckBox) findViewById(R.id.checkBox5);
             CheckBox chkSex = (CheckBox) findViewById(R.id.checkBox6);
             CheckBox chkSab = (CheckBox) findViewById(R.id.checkBox7);
-            EditText edLugar = (EditText) findViewById(R.id.editText2);
             EditText edHorario = (EditText) findViewById(R.id.editText3);
 
             edTitulo.setText(alarme.getTitulo());
@@ -91,7 +91,7 @@ public class AlarmeActivity extends AppCompatActivity {
             alarme = new Alarme();
         }
 
-        Button btnHorario = (Button) findViewById(R.id.button);
+        Button btnHorario = (Button) findViewById(R.id.button2);
         btnHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,18 +102,23 @@ public class AlarmeActivity extends AppCompatActivity {
             }
         });
 
-        Button btnLocal = (Button) findViewById(R.id.button2);
+        Button btnLocal = (Button) findViewById(R.id.button);
         btnLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(AlarmeActivity.this, LugarActivity.class);
 
-                AlarmeActivity.this.startActivity(it);
+                if(eventoLugar != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(LugarActivity.LUGAR_KEY, eventoLugar);
 
-                eventoLugar = new EventoLugar();
-                eventoLugar.setNomeLugar("Lugar Teste");
-                eventoLugar.setLatitude(14.0042F);
-                eventoLugar.setLongitude(13.1445F);
+                    it.putExtras(bundle);
+                    it.setFlags(LugarActivity.EDITAR);
+                } else {
+                    it.setFlags(LugarActivity.INCLUIR);
+                }
+
+                AlarmeActivity.this.startActivityForResult(it, LugarActivity.FLAG_ACTIVITY);
             }
         });
 
@@ -184,5 +189,21 @@ public class AlarmeActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         this.dbHelper.close();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == LugarActivity.FLAG_ACTIVITY) {
+            if(data.getFlags() == LugarActivity.RESULT_CODE_EXCLUIR) {
+                eventoLugar.setId(-1L);
+                edLugar.setText("");
+            } else if (data.getFlags() == LugarActivity.RESULT_CODE_SALVAR) {
+                eventoLugar = data.getParcelableExtra(LugarActivity.LUGAR_KEY);
+                edLugar.setText(eventoLugar.getNomeLugar());
+            }
+
+        }
     }
 }

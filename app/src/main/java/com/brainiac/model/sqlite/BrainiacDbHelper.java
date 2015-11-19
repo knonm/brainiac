@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class BrainiacDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "brainiac.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 10;
 
     private static final String TB_EVENTO_LUGAR =
             "CREATE TABLE " + BrainiacContract.BDEventoLugar.TABLE_NAME + " (" +
