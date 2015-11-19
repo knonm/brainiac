@@ -14,13 +14,6 @@
             android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Configuração do lembrete"
-                android:id="@+id/textView6"
-                android:textStyle="bold" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -73,37 +66,30 @@
             android:layout_marginTop="20dp" />
 
         <GridLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
+            android:paddingRight="-20dp"
             android:baselineAligned="false"
             android:clickable="true"
-            android:foreground="#ffffff"
-            android:background="#ffffff"
-            android:foregroundTint="#ffffff"
             android:visibility="visible"
-            android:layout_marginLeft="70dp"
-            android:layout_gravity="right"
+            android:layout_marginStart="70dp"
             android:foregroundGravity="center_horizontal"
             android:columnOrderPreserved="true"
-            android:layout_marginRight="65dp">
+            android:layout_marginEnd="65dp">
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="D"
                 android:id="@+id/checkBox"
-                android:checked="true"
+                android:checked="false"
                 android:paddingBottom="35dp"
                 android:paddingRight="10dp"
                 android:paddingLeft="-20dp"
-                android:background="#ffffff"
-                android:foreground="#ffffff"
-                android:shadowColor="#0033ff"
                 android:singleLine="false"
                 android:clickable="true"
-                android:foregroundTint="#ffffff"
                 android:visibility="visible" />
 
             <CheckBox
@@ -111,16 +97,12 @@
                 android:layout_height="wrap_content"
                 android:text="S"
                 android:id="@+id/checkBox2"
-                android:checked="true"
+                android:checked="false"
                 android:paddingBottom="35dp"
                 android:paddingLeft="-20dp"
                 android:paddingRight="10dp"
-                android:background="#ffffff"
-                android:foreground="#ffffff"
-                android:shadowColor="#0033ff"
                 android:singleLine="false"
                 android:clickable="true"
-                android:foregroundTint="#ffffff"
                 android:visibility="visible" />
 
             <CheckBox
@@ -128,16 +110,12 @@
                 android:layout_height="wrap_content"
                 android:text="T"
                 android:id="@+id/checkBox3"
-                android:checked="true"
+                android:checked="false"
                 android:paddingLeft="-20dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="35dp"
-                android:background="#ffffff"
-                android:foreground="#ffffff"
-                android:shadowColor="#0033ff"
                 android:singleLine="false"
                 android:clickable="true"
-                android:foregroundTint="#ffffff"
                 android:visibility="visible" />
 
             <CheckBox
@@ -145,16 +123,12 @@
                 android:layout_height="wrap_content"
                 android:text="Q"
                 android:id="@+id/checkBox4"
-                android:checked="true"
+                android:checked="false"
                 android:paddingBottom="35dp"
                 android:paddingRight="10dp"
                 android:paddingLeft="-20dp"
-                android:background="#ffffff"
-                android:foreground="#ffffff"
-                android:shadowColor="#0033ff"
                 android:singleLine="false"
                 android:clickable="true"
-                android:foregroundTint="#ffffff"
                 android:visibility="visible" />
 
             <CheckBox
@@ -162,16 +136,12 @@
                 android:layout_height="wrap_content"
                 android:text="Q"
                 android:id="@+id/checkBox5"
-                android:checked="true"
+                android:checked="false"
                 android:paddingLeft="-20dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="35dp"
-                android:background="#ffffff"
-                android:foreground="#ffffff"
-                android:shadowColor="#0033ff"
                 android:singleLine="false"
                 android:clickable="true"
-                android:foregroundTint="#ffffff"
                 android:visibility="visible" />
 
             <CheckBox
@@ -179,16 +149,12 @@
                 android:layout_height="wrap_content"
                 android:text="S"
                 android:id="@+id/checkBox6"
-                android:checked="true"
+                android:checked="false"
                 android:paddingBottom="35dp"
                 android:paddingRight="10dp"
                 android:paddingLeft="-20dp"
-                android:background="#ffffff"
-                android:foreground="#ffffff"
-                android:shadowColor="#0033ff"
                 android:singleLine="false"
                 android:clickable="true"
-                android:foregroundTint="#ffffff"
                 android:visibility="visible" />
 
             <CheckBox
@@ -196,15 +162,11 @@
                 android:layout_height="wrap_content"
                 android:text="S"
                 android:id="@+id/checkBox7"
-                android:checked="true"
+                android:checked="false"
                 android:paddingLeft="-20dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="35dp"
-                android:background="#ffffff"
-                android:foreground="#ffffff"
-                android:shadowColor="#ffffff"
                 android:singleLine="false"
-                android:foregroundTint="#ffffff"
                 android:clickable="true"
                 android:visibility="visible" />
         </GridLayout>
@@ -226,6 +188,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:editable="false"
                 android:id="@+id/editText2"
                 android:layout_weight="0.63" />
 
@@ -256,6 +219,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:editable="false"
                 android:id="@+id/editText3"
                 android:layout_weight="1" />
 
@@ -275,9 +239,9 @@
         android:text="Salvar"
         android:id="@+id/button3"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="27dp"
+        android:layout_marginBottom="25dp"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_marginStart="92dp"
+        android:layout_marginStart="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/lin_lay_1" />
 
@@ -286,8 +250,21 @@
         android:layout_height="wrap_content"
         android:text="Cancelar"
         android:id="@+id/button4"
+        android:layout_marginBottom="25dp"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_alignTop="@+id/button3"
         android:layout_toEndOf="@+id/button3" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Excluir"
+        android:id="@+id/button5"
+        android:layout_marginEnd="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_alignTop="@+id/button4"
+        android:layout_toEndOf="@+id/button4" />
 
 </RelativeLayout>

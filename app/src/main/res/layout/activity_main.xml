@@ -32,6 +32,8 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        app:backgroundTint="#ad1e1e"
+        android:tint="#ffffff" />
 
 </RelativeLayout>

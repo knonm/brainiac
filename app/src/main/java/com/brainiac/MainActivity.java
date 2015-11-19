@@ -1,6 +1,7 @@
 package com.brainiac;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +12,20 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.brainiac.model.Alarme;
+import com.brainiac.model.dao.AlarmeDAO;
+import com.brainiac.model.sqlite.BrainiacDbHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
+    private SQLiteOpenHelper dbHelper;
+
+    private AlarmeDAO alarmeDAO;
+
+    private List<Alarme> listAlarmes;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -29,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent it = new Intent(MainActivity.this, AlarmeActivity.class);
+
+                Bundle bundle = new Bundle();
+                it.setFlags(AlarmeActivity.INCLUIR);
+
                 startActivity(it);
             }
         });
@@ -44,8 +61,30 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new MainAdapter(new String[] { "AAA", "BBB", "CCC", "DDD", "EEE" });
+        listAlarmes = new ArrayList<>();
+        mAdapter = new MainAdapter(listAlarmes);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.dbHelper = new BrainiacDbHelper(this);
+
+        alarmeDAO = new AlarmeDAO(this.dbHelper);
+
+        listAlarmes.clear();
+        for(Alarme a : alarmeDAO.consultarTodos()) {
+            listAlarmes.add(a);
+        }
+
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.dbHelper.close();
     }
 
     @Override

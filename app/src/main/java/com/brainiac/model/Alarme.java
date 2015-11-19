@@ -8,28 +8,28 @@ import android.os.Parcelable;
  */
 public class Alarme implements Parcelable {
 
-    private int id;
-    private Evento[] eventos;
+    private long id;
+    private Evento evento;
     private String titulo;
 
     public Alarme() {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Evento[] getEventos() {
-        return eventos;
+    public Evento getEvento() {
+        return evento;
     }
 
-    public void setEventos(Evento[] eventos) {
-        this.eventos = eventos;
+    public void setEventos(Evento evento) {
+        this.evento = evento;
     }
 
     public String getTitulo() {
@@ -40,14 +40,20 @@ public class Alarme implements Parcelable {
         this.titulo = titulo;
     }
 
+    @Override
+    public String toString() {
+        return titulo;
+    }
+
     public static transient final Parcelable.Creator<Alarme> CREATOR = new Creator<Alarme>() {
         @Override
         public Alarme createFromParcel(Parcel source) {
-            Alarme a = new Alarme();
-            a.id = source.readInt();
-            //a.eventos = source.createTypedArray(Evento.class);
+            Alarme alarme = new Alarme();
+            alarme.id = source.readLong();
+            alarme.evento = source.readParcelable(Evento.class.getClassLoader());
+            alarme.titulo = source.readString();
 
-            return a;
+            return alarme;
         }
 
         @Override
@@ -63,6 +69,8 @@ public class Alarme implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeLong(id);
+        dest.writeParcelable(evento, 0);
+        dest.writeString(titulo);
     }
 }

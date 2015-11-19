@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".AlarmeActivity"
-            android:label="@string/title_activity_alarme"
+            android:label="Configuração do lembrete"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
