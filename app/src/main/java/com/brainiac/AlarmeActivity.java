@@ -1,5 +1,6 @@
 package com.brainiac;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -105,6 +106,10 @@ public class AlarmeActivity extends AppCompatActivity {
         btnLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent it = new Intent(AlarmeActivity.this, LugarActivity.class);
+
+                AlarmeActivity.this.startActivity(it);
+
                 eventoLugar = new EventoLugar();
                 eventoLugar.setNomeLugar("Lugar Teste");
                 eventoLugar.setLatitude(14.0042F);

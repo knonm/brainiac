@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.brainiac" >
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +23,19 @@
         <activity
             android:name=".AlarmeActivity"
             android:label="Configuração do lembrete"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCafo9Kh8_L5dF-e9d0vADPXchU9Qo8vrg" />
+
+        <activity
+            android:name=".LugarActivity"
+            android:label="@string/title_activity_lugar"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
