@@ -44,7 +44,7 @@ public class AlarmeDAO {
     }
 
     public void excluir(Alarme alarme) {
-        eventoDAO.excluir(alarme.getEvento());
+        eventoDAO.excluir(alarme.getEvento().getId());
 
         String selection = BrainiacContract.BDAlarme.COLUMN_NAME_ID + " = ?";
         String[] selectionArgs = { String.valueOf(alarme.getId()) };
@@ -57,6 +57,8 @@ public class AlarmeDAO {
     }
 
     public void atualizar(Alarme alarme) {
+        Alarme alarmeOld = consultar(alarme.getId());
+
         eventoDAO.atualizar(alarme.getEvento());
 
         ContentValues values = new ContentValues();
@@ -70,6 +72,40 @@ public class AlarmeDAO {
         db.update(BrainiacContract.BDAlarme.TABLE_NAME, values, selection, selectionArgs);
 
         db.close();
+    }
+
+    private Alarme consultar(long id) {
+        String[] projection = {
+                BrainiacContract.BDAlarme.COLUMN_NAME_ID,
+                BrainiacContract.BDAlarme.COLUMN_NAME_ID_EVENTO,
+                BrainiacContract.BDAlarme.COLUMN_NAME_TITULO
+        };
+
+        String selection = BrainiacContract.BDAlarme.COLUMN_NAME_ID + " = ?";
+        String[] selectionArgs = { String.valueOf(id) };
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor c = db.query(BrainiacContract.BDAlarme.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        Alarme alarme = null;
+        Evento evento;
+
+        if(c.moveToFirst()) {
+            alarme = new Alarme();
+
+            alarme.setId(c.getLong(c.getColumnIndexOrThrow(BrainiacContract.BDAlarme.COLUMN_NAME_ID)));
+
+            evento = eventoDAO.consultar(c.getLong(c.getColumnIndexOrThrow(BrainiacContract.BDAlarme.COLUMN_NAME_ID_EVENTO)));
+            alarme.setEventos(evento);
+
+            alarme.setTitulo(c.getString(c.getColumnIndexOrThrow(BrainiacContract.BDAlarme.COLUMN_NAME_TITULO)));
+        }
+
+        c.close();
+        db.close();
+
+        return alarme;
     }
 
     public Alarme[] consultarTodos() {

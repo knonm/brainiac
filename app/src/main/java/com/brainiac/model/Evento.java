@@ -13,7 +13,8 @@ public class Evento implements Parcelable {
     private EventoHorario eventoHorario;
 
     public Evento() {
-
+        eventoHorario = null;
+        eventoLugar = null;
     }
 
     public long getId() {

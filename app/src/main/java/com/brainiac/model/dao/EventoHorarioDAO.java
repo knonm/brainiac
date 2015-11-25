@@ -123,6 +123,8 @@ public class EventoHorarioDAO {
         Cursor c = db.query(BrainiacContract.BDEventoHorario.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
 
         EventoHorario eventoHorario = null;
+        int colInd;
+        String dataEvento;
 
         if(c.moveToFirst()) {
             eventoHorario = new EventoHorario();
@@ -130,10 +132,17 @@ public class EventoHorarioDAO {
             eventoHorario.setId(c.getLong(c.getColumnIndexOrThrow(BrainiacContract.BDEventoHorario.COLUMN_NAME_ID)));
 
             df = new SimpleDateFormat(EventoHorario.DATE_FORMAT);
+
+            colInd = c.getColumnIndexOrThrow(BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO);
             try {
-                eventoHorario.setData_evento(df.parse(c.getString(c.getColumnIndexOrThrow(BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO))));
-            } catch (ParseException e) {
-                e.printStackTrace();
+                dataEvento = c.getString(colInd);
+                try {
+                    eventoHorario.setData_evento(df.parse(dataEvento));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
+                eventoHorario.setData_evento(null);
             }
 
             df = new SimpleDateFormat(EventoHorario.HOUR_FORMAT);

@@ -25,7 +25,14 @@ public class EventoHorario implements Parcelable {
     private boolean recSab;
 
     public EventoHorario() {
-
+        data_evento = null;
+        recDom = false;
+        recSeg = false;
+        recTer = false;
+        recQua = false;
+        recQui = false;
+        recSex = false;
+        recSab = false;
     }
 
     public long getId() {

@@ -120,19 +120,6 @@ public class LugarActivity extends AppCompatActivity implements GoogleApiClient.
                 LugarActivity.this.finish();
             }
         });
-
-        Button btnExcluir = (Button) findViewById(R.id.button8);
-        btnExcluir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(LugarActivity.this.getIntent().getFlags() == LugarActivity.EDITAR) {
-                    Intent it = new Intent(LugarActivity.this, AlarmeActivity.class);
-                    it.setFlags(LugarActivity.RESULT_CODE_EXCLUIR);
-                    LugarActivity.this.setResult(FLAG_ACTIVITY, it);
-                }
-                LugarActivity.this.finish();
-            }
-        });
     }
 
     @Override

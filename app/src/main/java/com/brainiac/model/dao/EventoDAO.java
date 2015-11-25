@@ -53,12 +53,19 @@ public class EventoDAO {
         return idEvento;
     }
 
-    public void excluir(Evento evento) {
-        eventoHorarioDAO.excluir(evento.getEventoHorario());
-        eventoLugarDAO.excluir(evento.getEventoLugar());
+    public void excluir(long id) {
+        Evento eventoOld = consultar(id);
+
+        if(eventoOld.getEventoLugar() != null) {
+            eventoLugarDAO.excluir(eventoOld.getEventoLugar());
+        }
+
+        if(eventoOld.getEventoHorario() != null) {
+            eventoHorarioDAO.excluir(eventoOld.getEventoHorario());
+        }
 
         String selection = BrainiacContract.BDEvento.COLUMN_NAME_ID + " = ?";
-        String[] selectionArgs = { String.valueOf(evento.getId()) };
+        String[] selectionArgs = { String.valueOf(id) };
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -68,29 +75,37 @@ public class EventoDAO {
     }
 
     public void atualizar(Evento evento) {
-        ContentValues values = new ContentValues();
+        if (evento.getEventoHorario() != null && evento.getEventoLugar() != null) {
+            Evento eventoOld = consultar(evento.getId());
 
-        if(evento.getEventoHorario() != null) {
-            if(evento.getEventoHorario().getId() < 0L) {
+            ContentValues values = new ContentValues();
+
+            if (evento.getEventoHorario() != null) {
+                if(eventoOld.getEventoHorario() == null) {
+                    eventoHorarioDAO.inserir(evento.getEventoHorario());
+                } else {
+                    eventoHorarioDAO.atualizar(evento.getEventoHorario());
+                }
+                values.put(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO, evento.getEventoHorario().getId());
+            } else if (eventoOld.getEventoHorario() != null) {
                 eventoHorarioDAO.excluir(evento.getEventoHorario());
                 values.putNull(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO);
-            } else {
-                eventoHorarioDAO.atualizar(evento.getEventoHorario());
             }
-        }
 
-        if(evento.getEventoLugar() != null) {
-            if(evento.getEventoLugar().getId() < 0L) {
+            if (evento.getEventoLugar() != null) {
+                if(eventoOld.getEventoLugar() == null) {
+                    eventoLugarDAO.inserir(evento.getEventoLugar());
+                } else {
+                    eventoLugarDAO.atualizar(evento.getEventoLugar());
+                }
+                values.put(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO, evento.getEventoHorario().getId());
+            } else if (eventoOld.getEventoLugar() != null) {
                 eventoLugarDAO.excluir(evento.getEventoLugar());
                 values.putNull(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_LUGAR);
-            } else {
-                eventoLugarDAO.atualizar(evento.getEventoLugar());
             }
-        }
 
-        if(evento.getEventoHorario() != null || evento.getEventoLugar() != null) {
             String selection = BrainiacContract.BDEvento.COLUMN_NAME_ID + " = ?";
-            String[] selectionArgs = { String.valueOf(evento.getId()) };
+            String[] selectionArgs = {String.valueOf(evento.getId())};
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             db.update(BrainiacContract.BDEvento.TABLE_NAME, values, selection, selectionArgs);
@@ -115,16 +130,34 @@ public class EventoDAO {
         Evento evento = null;
         EventoHorario eventoHorario;
         EventoLugar eventoLugar;
+        int colInd;
+        long idTpEvento;
 
         if(c.moveToFirst()) {
             evento = new Evento();
 
             evento.setId(c.getLong(c.getColumnIndexOrThrow(BrainiacContract.BDEvento.COLUMN_NAME_ID)));
 
-            eventoHorario = eventoHorarioDAO.consultar(c.getLong(c.getColumnIndexOrThrow(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO)));
+            colInd = c.getColumnIndexOrThrow(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO);
+
+            // Tratamento para casos em que o id eh null
+            try {
+                idTpEvento = c.getLong(colInd);
+                eventoHorario = eventoHorarioDAO.consultar(idTpEvento);
+            } catch (Exception e) {
+                eventoHorario = null;
+            }
             evento.setEventoHorario(eventoHorario);
 
-            eventoLugar = eventoLugarDAO.consultar(c.getLong(c.getColumnIndexOrThrow(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_LUGAR)));
+            colInd = c.getColumnIndexOrThrow(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_LUGAR);
+
+            // Tratamento para casos em que o id eh null
+            try {
+                idTpEvento = c.getLong(colInd);
+                eventoLugar = eventoLugarDAO.consultar(idTpEvento);
+            } catch (Exception e) {
+                eventoLugar = null;
+            }
             evento.setEventoLugar(eventoLugar);
         }
 
