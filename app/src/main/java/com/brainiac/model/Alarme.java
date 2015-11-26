@@ -3,9 +3,6 @@ package com.brainiac.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by matheus on 09/11/2015.
- */
 public class Alarme implements Parcelable {
 
     private long id;

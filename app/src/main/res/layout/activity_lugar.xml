@@ -26,13 +26,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Nome do Lugar: "
-            android:id="@+id/textView6" />
+            android:text="@string/activity_lugar_lbl_nome_lugar"
+            android:id="@+id/textView6"
+            android:labelFor="@+id/editText4" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText4" />
+            android:id="@+id/editText4"
+            android:inputType="text" />
     </LinearLayout>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -40,20 +42,21 @@
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/map"
         android:layout_marginBottom="60dp" />
 
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-55dp">
+        android:layout_marginTop="-55dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp">
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Salvar"
+            android:text="@string/activity_lugar_btn_salvar"
             android:id="@+id/button6"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
@@ -62,10 +65,11 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancelar"
+            android:text="@string/activity_lugar_btn_cancelar"
             android:id="@+id/button7"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
 </LinearLayout>

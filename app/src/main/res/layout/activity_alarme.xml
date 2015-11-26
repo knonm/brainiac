@@ -35,21 +35,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Título:"
-                android:id="@+id/textView" />
+                android:text="@string/activity_alarme_lbl_titulo"
+                android:id="@+id/textView"
+                android:labelFor="@+id/editText"/>
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/editText"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:inputType="text" />
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Me lembrar em:"
+            android:text="@string/activity_alarme_lbl_lembrar"
             android:id="@+id/textView4"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
@@ -64,136 +66,116 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_alarme_lbl_semana"
+                    android:id="@+id/radio_btn_semana"
+                    android:onClick="onRadioButtonClicked"
+                    android:checked="false" />
+
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:gravity="center">
 
-                    <RadioButton
+                    <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dias da semana"
-                        android:id="@+id/radio_btn_semana"
-                        android:onClick="onRadioButtonClicked"
-                        android:checked="false" />
+                        android:text="@string/activity_alarme_lbl_dom"
+                        android:id="@+id/checkBox"
+                        android:checked="false"
+                        android:paddingBottom="35dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="-20dp"
+                        android:singleLine="false"
+                        android:clickable="true"
+                        android:visibility="visible" />
 
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
+                    <CheckBox
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
+                        android:text="@string/activity_alarme_lbl_seg"
+                        android:id="@+id/checkBox2"
+                        android:checked="false"
+                        android:paddingBottom="35dp"
+                        android:paddingStart="-20dp"
+                        android:paddingEnd="10dp"
+                        android:singleLine="false"
+                        android:clickable="true"
+                        android:visibility="visible" />
 
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="D"
-                            android:id="@+id/checkBox"
-                            android:checked="false"
-                            android:paddingBottom="35dp"
-                            android:paddingRight="10dp"
-                            android:paddingLeft="-20dp"
-                            android:singleLine="false"
-                            android:clickable="true"
-                            android:visibility="visible"
-                            />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_alarme_lbl_ter"
+                        android:id="@+id/checkBox3"
+                        android:checked="false"
+                        android:paddingStart="-20dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="35dp"
+                        android:singleLine="false"
+                        android:clickable="true"
+                        android:visibility="visible" />
 
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="S"
-                            android:id="@+id/checkBox2"
-                            android:checked="false"
-                            android:paddingBottom="35dp"
-                            android:paddingLeft="-20dp"
-                            android:paddingRight="10dp"
-                            android:singleLine="false"
-                            android:clickable="true"
-                            android:visibility="visible" />
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="T"
-                            android:id="@+id/checkBox3"
-                            android:checked="false"
-                            android:paddingLeft="-20dp"
-                            android:paddingRight="10dp"
-                            android:paddingBottom="35dp"
-                            android:singleLine="false"
-                            android:clickable="true"
-                            android:visibility="visible" />
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Q"
-                            android:id="@+id/checkBox4"
-                            android:checked="false"
-                            android:paddingBottom="35dp"
-                            android:paddingRight="10dp"
-                            android:paddingLeft="-20dp"
-                            android:singleLine="false"
-                            android:clickable="true"
-                            android:visibility="visible" />
-
-                    </LinearLayout>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_alarme_lbl_qua"
+                        android:id="@+id/checkBox4"
+                        android:checked="false"
+                        android:paddingBottom="35dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="-20dp"
+                        android:singleLine="false"
+                        android:clickable="true"
+                        android:visibility="visible" />
 
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:gravity="center">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center">
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_alarme_lbl_qui"
+                        android:id="@+id/checkBox5"
+                        android:checked="false"
+                        android:paddingStart="-20dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="35dp"
+                        android:singleLine="false"
+                        android:clickable="true"
+                        android:visibility="visible" />
 
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Q"
-                            android:id="@+id/checkBox5"
-                            android:checked="false"
-                            android:paddingLeft="-20dp"
-                            android:paddingRight="10dp"
-                            android:paddingBottom="35dp"
-                            android:singleLine="false"
-                            android:clickable="true"
-                            android:visibility="visible" />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_alarme_lbl_sex"
+                        android:id="@+id/checkBox6"
+                        android:checked="false"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="-20dp"
+                        android:paddingBottom="35dp"
+                        android:singleLine="false"
+                        android:clickable="true"
+                        android:visibility="visible" />
 
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="S"
-                            android:id="@+id/checkBox6"
-                            android:checked="false"
-                            android:paddingBottom="35dp"
-                            android:paddingRight="10dp"
-                            android:paddingLeft="-20dp"
-                            android:singleLine="false"
-                            android:clickable="true"
-                            android:visibility="visible" />
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="S"
-                            android:id="@+id/checkBox7"
-                            android:checked="false"
-                            android:paddingLeft="-20dp"
-                            android:paddingRight="10dp"
-                            android:paddingBottom="35dp"
-                            android:singleLine="false"
-                            android:clickable="true"
-                            android:visibility="visible" />
-                    </LinearLayout>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_alarme_lbl_sab"
+                        android:id="@+id/checkBox7"
+                        android:checked="false"
+                        android:paddingStart="-20dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="35dp"
+                        android:singleLine="false"
+                        android:clickable="true"
+                        android:visibility="visible" />
 
                 </TableRow>
             </TableLayout>
@@ -210,10 +192,11 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Data específica"
+                        android:text="@string/activity_alarme_lbl_data"
                         android:id="@+id/radio_btn_data"
                         android:onClick="onRadioButtonClicked"
-                        android:checked="false"/>
+                        android:checked="false"
+                        android:labelFor="@+id/editText5"/>
                 </TableRow>
 
                 <TableRow
@@ -242,13 +225,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Lugar: "
-                android:id="@+id/textView2" />
+                android:text="@string/activity_alarme_lbl_lugar"
+                android:id="@+id/textView2"
+                android:labelFor="@+id/editText2"/>
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:editable="false"
+                android:inputType="none"
                 android:id="@+id/editText2"
                 android:layout_weight="0.63" />
 
@@ -256,14 +240,14 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="..."
+                android:text="@string/activity_alarme_btn_lugar"
                 android:id="@+id/button" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="X"
+                android:text="@string/activity_alarme_btn_del_lugar"
                 android:id="@+id/button12" />
 
         </LinearLayout>
@@ -280,13 +264,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Horário: "
-                android:id="@+id/textView3" />
+                android:text="@string/activity_alarme_lbl_horario"
+                android:id="@+id/textView3"
+                android:labelFor="@+id/editText3"/>
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:editable="false"
+                android:inputType="none"
                 android:id="@+id/editText3"
                 android:layout_weight="1" />
 
@@ -294,14 +279,14 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="..."
+                android:text="@string/activity_alarme_btn_horario"
                 android:id="@+id/button2" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="X"
+                android:text="@string/activity_alarme_btn_del_horario"
                 android:id="@+id/button13" />
         </LinearLayout>
 
@@ -310,7 +295,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Salvar"
+        android:text="@string/activity_alarme_btn_salvar"
         android:id="@+id/button3"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="25dp"
@@ -322,7 +307,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancelar"
+        android:text="@string/activity_alarme_btn_cancelar"
         android:id="@+id/button4"
         android:layout_marginBottom="25dp"
         android:layout_centerHorizontal="true"
@@ -333,7 +318,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Excluir"
+        android:text="@string/activity_alarme_btn_excluir"
         android:id="@+id/button5"
         android:layout_marginEnd="40dp"
         android:layout_gravity="center_horizontal"

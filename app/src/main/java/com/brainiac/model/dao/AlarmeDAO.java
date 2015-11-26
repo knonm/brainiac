@@ -12,9 +12,6 @@ import com.brainiac.model.sqlite.BrainiacContract;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by matheus on 09/11/2015.
- */
 public class AlarmeDAO {
 
     private SQLiteOpenHelper dbHelper;
@@ -57,8 +54,6 @@ public class AlarmeDAO {
     }
 
     public void atualizar(Alarme alarme) {
-        Alarme alarmeOld = consultar(alarme.getId());
-
         eventoDAO.atualizar(alarme.getEvento());
 
         ContentValues values = new ContentValues();
@@ -142,6 +137,6 @@ public class AlarmeDAO {
         c.close();
         db.close();
 
-        return listAlarme.toArray(new Alarme[0]);
+        return listAlarme.toArray(new Alarme[listAlarme.size()]);
     }
 }

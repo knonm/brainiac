@@ -8,13 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.brainiac.model.EventoHorario;
 import com.brainiac.model.sqlite.BrainiacContract;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-/**
- * Created by matheus on 18/11/2015.
- */
 public class EventoHorarioDAO {
 
     private SQLiteOpenHelper dbHelper;

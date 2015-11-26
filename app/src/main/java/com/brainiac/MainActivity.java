@@ -17,18 +17,15 @@ import com.brainiac.model.dao.AlarmeDAO;
 import com.brainiac.model.sqlite.BrainiacDbHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private SQLiteOpenHelper dbHelper;
 
-    private AlarmeDAO alarmeDAO;
-
     private List<Alarme> listAlarmes;
-    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +40,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent it = new Intent(MainActivity.this, AlarmeActivity.class);
 
-                Bundle bundle = new Bundle();
                 it.setFlags(AlarmeActivity.INCLUIR);
 
                 startActivity(it);
             }
         });
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
@@ -71,12 +67,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         this.dbHelper = new BrainiacDbHelper(this);
 
-        alarmeDAO = new AlarmeDAO(this.dbHelper);
+        AlarmeDAO alarmeDAO = new AlarmeDAO(this.dbHelper);
 
         listAlarmes.clear();
-        for(Alarme a : alarmeDAO.consultarTodos()) {
-            listAlarmes.add(a);
-        }
+        Collections.addAll(listAlarmes, alarmeDAO.consultarTodos());
 
         mAdapter.notifyDataSetChanged();
     }

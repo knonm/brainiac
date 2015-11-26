@@ -4,9 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by matheus on 09/11/2015.
- */
 public class BrainiacDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "brainiac.db";

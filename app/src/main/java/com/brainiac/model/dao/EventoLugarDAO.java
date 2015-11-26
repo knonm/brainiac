@@ -8,9 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.brainiac.model.EventoLugar;
 import com.brainiac.model.sqlite.BrainiacContract;
 
-/**
- * Created by matheus on 09/11/2015.
- */
 public class EventoLugarDAO {
 
     private SQLiteOpenHelper dbHelper;

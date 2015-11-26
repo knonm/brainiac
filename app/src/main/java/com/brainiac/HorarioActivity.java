@@ -7,12 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 
-/**
- * Created by Thiago Bonfiglio on 19/11/2015.
- */
 public class HorarioActivity extends AppCompatActivity {
-
-    private TimePicker hora = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +16,7 @@ public class HorarioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
-        hora = (TimePicker) findViewById(R.id.timePicker);
+        TimePicker hora = (TimePicker) findViewById(R.id.timePicker);
         hora.is24HourView();
         hora.setEnabled(true);
 

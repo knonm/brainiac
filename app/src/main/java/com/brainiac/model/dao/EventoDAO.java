@@ -10,12 +10,6 @@ import com.brainiac.model.EventoHorario;
 import com.brainiac.model.EventoLugar;
 import com.brainiac.model.sqlite.BrainiacContract;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by matheus on 09/11/2015.
- */
 public class EventoDAO {
 
     private SQLiteOpenHelper dbHelper;

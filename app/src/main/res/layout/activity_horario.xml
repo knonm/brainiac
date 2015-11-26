@@ -10,12 +10,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Horário"
+        android:text="@string/activity_horario_title"
         android:id="@+id/textView7"
         android:layout_gravity="center_horizontal"
         android:textStyle="bold"
         android:layout_marginTop="20dp"
-        android:textSize="30dp" />
+        android:textSize="30sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,8 +30,8 @@
             android:measureAllChildren="false"
             android:minHeight="20dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="20dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
     </RelativeLayout>
@@ -40,40 +40,35 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        style="?android:attr/buttonBarStyle">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Salvar"
+            android:text="@string/activity_horario_btn_salvar"
             android:id="@+id/button10"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="25dp"
-            android:layout_alignWithParentIfMissing="true"
             android:layout_marginStart="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/lin_lay_1" />
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancelar"
+            android:text="@string/activity_horario_btn_cancelar"
             android:id="@+id/button11"
             android:layout_marginBottom="25dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignTop="@+id/button3"
-            android:layout_toEndOf="@+id/button3" />
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Excluir"
+            android:text="@string/activity_horario_btn_excluir"
             android:id="@+id/button9"
             android:layout_marginEnd="40dp"
             android:layout_gravity="center_horizontal"
-            android:layout_alignWithParentIfMissing="true"
-            android:layout_alignTop="@+id/button4"
-            android:layout_toEndOf="@+id/button4" />
+            style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
 
 </LinearLayout>

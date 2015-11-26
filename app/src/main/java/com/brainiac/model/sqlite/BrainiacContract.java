@@ -2,9 +2,6 @@ package com.brainiac.model.sqlite;
 
 import android.provider.BaseColumns;
 
-/**
- * Created by matheus on 18/11/2015.
- */
 public final class BrainiacContract {
 
     public BrainiacContract() {

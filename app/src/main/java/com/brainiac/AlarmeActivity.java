@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.brainiac.model.Alarme;
 import com.brainiac.model.EventoHorario;
@@ -51,13 +50,6 @@ public class AlarmeActivity extends AppCompatActivity {
     private CheckBox chkQui;
     private CheckBox chkSex;
     private CheckBox chkSab;
-    private Button btnLocal;
-    private Button btnHorario;
-    private Button btnSalvar;
-    private Button btnCancelar;
-    private Button btnExcluir;
-    private Button btnExcluirLocal;
-    private Button btnExcluirHorario;
     private EditText edData;
     private EditText edLugar;
     private EditText edHorario;
@@ -80,13 +72,13 @@ public class AlarmeActivity extends AppCompatActivity {
         this.chkQui = (CheckBox) findViewById(R.id.checkBox5);
         this.chkSex = (CheckBox) findViewById(R.id.checkBox6);
         this.chkSab = (CheckBox) findViewById(R.id.checkBox7);
-        this.btnLocal = (Button) findViewById(R.id.button);
-        this.btnHorario = (Button) findViewById(R.id.button2);
-        this.btnSalvar = (Button) findViewById(R.id.button3);
-        this.btnCancelar = (Button) findViewById(R.id.button4);
-        this.btnExcluir = (Button) findViewById(R.id.button5);
-        this.btnExcluirLocal = (Button) findViewById(R.id.button12);
-        this.btnExcluirHorario = (Button) findViewById(R.id.button13);
+        Button btnLocal = (Button) findViewById(R.id.button);
+        Button btnHorario = (Button) findViewById(R.id.button2);
+        Button btnSalvar = (Button) findViewById(R.id.button3);
+        Button btnCancelar = (Button) findViewById(R.id.button4);
+        Button btnExcluir = (Button) findViewById(R.id.button5);
+        Button btnExcluirLocal = (Button) findViewById(R.id.button12);
+        Button btnExcluirHorario = (Button) findViewById(R.id.button13);
         this.edData = (EditText) findViewById(R.id.editText5);
         this.edLugar = (EditText) findViewById(R.id.editText2);
         this.edHorario = (EditText) findViewById(R.id.editText3);
@@ -127,11 +119,11 @@ public class AlarmeActivity extends AppCompatActivity {
         } else if (getIntent().getFlags() == INCLUIR) {
             this.alarme = new Alarme();
             this.eventoLugar = null;
-            this.btnExcluir.setEnabled(false);
+            btnExcluir.setEnabled(false);
             this.habilitarHorario(false);
         }
 
-        this.btnHorario.setOnClickListener(new View.OnClickListener() {
+        btnHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
@@ -153,12 +145,12 @@ public class AlarmeActivity extends AppCompatActivity {
             }
         });
 
-        this.btnLocal.setOnClickListener(new View.OnClickListener() {
+        btnLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(AlarmeActivity.this, LugarActivity.class);
 
-                if(AlarmeActivity.this.eventoLugar != null) {
+                if (AlarmeActivity.this.eventoLugar != null) {
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(LugarActivity.LUGAR_KEY, eventoLugar);
 
@@ -172,7 +164,7 @@ public class AlarmeActivity extends AppCompatActivity {
             }
         });
 
-        this.btnSalvar.setOnClickListener(new View.OnClickListener() {
+        btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isOk = true;
@@ -192,7 +184,7 @@ public class AlarmeActivity extends AppCompatActivity {
                     builder.create().show();
                 }
 
-                if(isOk) {
+                if (isOk) {
                     AlarmeActivity.this.alarme.setTitulo(AlarmeActivity.this.tvTitulo.getText().toString());
 
                     if (AlarmeActivity.this.eventoHorario != null) {
@@ -231,7 +223,7 @@ public class AlarmeActivity extends AppCompatActivity {
         btnExcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AlarmeActivity.this.getIntent().getFlags() == AlarmeActivity.EDITAR) {
+                if (AlarmeActivity.this.getIntent().getFlags() == AlarmeActivity.EDITAR) {
                     AlarmeActivity.this.alarmeDAO.excluir(AlarmeActivity.this.alarme);
                 }
                 AlarmeActivity.this.finish();

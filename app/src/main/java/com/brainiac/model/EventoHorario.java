@@ -1,5 +1,6 @@
 package com.brainiac.model;
 
+import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,15 +9,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by matheus on 18/11/2015.
- */
 public class EventoHorario implements Parcelable {
 
     public static final String STRING_DATE_FORMAT = "dd/MM/yyyy";
     public static final String STRING_HOUR_FORMAT = "HH:mm";
 
+    @SuppressLint("SimpleDateFormat")
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat(EventoHorario.STRING_DATE_FORMAT);
+    @SuppressLint("SimpleDateFormat")
     private static final DateFormat HOUR_FORMAT = new SimpleDateFormat(EventoHorario.STRING_HOUR_FORMAT);
 
     private long id;
