@@ -75,32 +75,36 @@ public class EventoDAO {
     }
 
     public void atualizar(Evento evento) {
-        if (evento.getEventoHorario() != null && evento.getEventoLugar() != null) {
+        if (evento.getEventoHorario() != null || evento.getEventoLugar() != null) {
             Evento eventoOld = consultar(evento.getId());
 
             ContentValues values = new ContentValues();
 
+            long id;
+
             if (evento.getEventoHorario() != null) {
                 if(eventoOld.getEventoHorario() == null) {
-                    eventoHorarioDAO.inserir(evento.getEventoHorario());
+                    id = eventoHorarioDAO.inserir(evento.getEventoHorario());
                 } else {
                     eventoHorarioDAO.atualizar(evento.getEventoHorario());
+                    id = evento.getEventoHorario().getId();
                 }
-                values.put(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO, evento.getEventoHorario().getId());
+                values.put(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO, id);
             } else if (eventoOld.getEventoHorario() != null) {
-                eventoHorarioDAO.excluir(evento.getEventoHorario());
+                eventoHorarioDAO.excluir(eventoOld.getEventoHorario());
                 values.putNull(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO);
             }
 
             if (evento.getEventoLugar() != null) {
                 if(eventoOld.getEventoLugar() == null) {
-                    eventoLugarDAO.inserir(evento.getEventoLugar());
+                    id = eventoLugarDAO.inserir(evento.getEventoLugar());
                 } else {
                     eventoLugarDAO.atualizar(evento.getEventoLugar());
+                    id = evento.getEventoLugar().getId();
                 }
-                values.put(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_HORARIO, evento.getEventoHorario().getId());
+                values.put(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_LUGAR, id);
             } else if (eventoOld.getEventoLugar() != null) {
-                eventoLugarDAO.excluir(evento.getEventoLugar());
+                eventoLugarDAO.excluir(eventoOld.getEventoLugar());
                 values.putNull(BrainiacContract.BDEvento.COLUMN_NAME_ID_EVENTO_LUGAR);
             }
 

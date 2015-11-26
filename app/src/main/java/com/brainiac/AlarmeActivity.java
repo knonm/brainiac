@@ -17,19 +17,16 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.brainiac.model.Alarme;
-import com.brainiac.model.Evento;
 import com.brainiac.model.EventoHorario;
 import com.brainiac.model.EventoLugar;
 import com.brainiac.model.dao.AlarmeDAO;
 import com.brainiac.model.sqlite.BrainiacDbHelper;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class AlarmeActivity extends AppCompatActivity {
@@ -46,6 +43,28 @@ public class AlarmeActivity extends AppCompatActivity {
     private EventoHorario eventoHorario;
     private EventoLugar eventoLugar;
 
+    // UI
+    private CheckBox chkDom;
+    private CheckBox chkSeg;
+    private CheckBox chkTer;
+    private CheckBox chkQua;
+    private CheckBox chkQui;
+    private CheckBox chkSex;
+    private CheckBox chkSab;
+    private Button btnLocal;
+    private Button btnHorario;
+    private Button btnSalvar;
+    private Button btnCancelar;
+    private Button btnExcluir;
+    private Button btnExcluirLocal;
+    private Button btnExcluirHorario;
+    private EditText edData;
+    private EditText edLugar;
+    private EditText edHorario;
+    private RadioButton radioBtnSemana;
+    private RadioButton radioBtnData;
+    private TextView tvTitulo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,93 +73,79 @@ public class AlarmeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Instanciando elementos da interface
-        CheckBox chkDom = (CheckBox) findViewById(R.id.checkBox);
-        CheckBox chkSeg = (CheckBox) findViewById(R.id.checkBox2);
-        CheckBox chkTer = (CheckBox) findViewById(R.id.checkBox3);
-        CheckBox chkQua = (CheckBox) findViewById(R.id.checkBox4);
-        CheckBox chkQui = (CheckBox) findViewById(R.id.checkBox5);
-        CheckBox chkSex = (CheckBox) findViewById(R.id.checkBox6);
-        CheckBox chkSab = (CheckBox) findViewById(R.id.checkBox7);
-        Button btnLocal = (Button) findViewById(R.id.button);
-        Button btnHorario = (Button) findViewById(R.id.button2);
-        Button btnSalvar = (Button) findViewById(R.id.button3);
-        Button btnCancelar = (Button) findViewById(R.id.button4);
-        Button btnExcluir = (Button) findViewById(R.id.button5);
-        Button btnExcluirLocal = (Button) findViewById(R.id.button12);
-        Button btnExcluirHorario = (Button) findViewById(R.id.button13);
-        final EditText edData = (EditText) findViewById(R.id.editText5);
-        EditText edLugar = (EditText) findViewById(R.id.editText2);
-        final EditText edHorario = (EditText) findViewById(R.id.editText3);
-        final RadioButton radioBtnSemana = (RadioButton) findViewById(R.id.radio_btn_semana);
-        final RadioButton radioBtnData = (RadioButton) findViewById(R.id.radio_btn_data);
+        this.chkDom = (CheckBox) findViewById(R.id.checkBox);
+        this.chkSeg = (CheckBox) findViewById(R.id.checkBox2);
+        this.chkTer = (CheckBox) findViewById(R.id.checkBox3);
+        this.chkQua = (CheckBox) findViewById(R.id.checkBox4);
+        this.chkQui = (CheckBox) findViewById(R.id.checkBox5);
+        this.chkSex = (CheckBox) findViewById(R.id.checkBox6);
+        this.chkSab = (CheckBox) findViewById(R.id.checkBox7);
+        this.btnLocal = (Button) findViewById(R.id.button);
+        this.btnHorario = (Button) findViewById(R.id.button2);
+        this.btnSalvar = (Button) findViewById(R.id.button3);
+        this.btnCancelar = (Button) findViewById(R.id.button4);
+        this.btnExcluir = (Button) findViewById(R.id.button5);
+        this.btnExcluirLocal = (Button) findViewById(R.id.button12);
+        this.btnExcluirHorario = (Button) findViewById(R.id.button13);
+        this.edData = (EditText) findViewById(R.id.editText5);
+        this.edLugar = (EditText) findViewById(R.id.editText2);
+        this.edHorario = (EditText) findViewById(R.id.editText3);
+        this.radioBtnSemana = (RadioButton) findViewById(R.id.radio_btn_semana);
+        this.radioBtnData = (RadioButton) findViewById(R.id.radio_btn_data);
+        this.tvTitulo = (TextView) AlarmeActivity.this.findViewById(R.id.editText);
 
         if(getIntent().getFlags() == EDITAR) {
-            alarme = getIntent().getParcelableExtra(ALARME_KEY);
-            eventoLugar = alarme.getEvento().getEventoLugar();
-            eventoHorario = alarme.getEvento().getEventoHorario();
+            this.alarme = getIntent().getParcelableExtra(ALARME_KEY);
+            this.eventoLugar = this.alarme.getEvento().getEventoLugar();
+            this.eventoHorario = this.alarme.getEvento().getEventoHorario();
 
-            ((EditText) findViewById(R.id.editText)).setText(alarme.getTitulo());
+            this.tvTitulo.setText(this.alarme.getTitulo());
 
-            if(eventoLugar != null) {
-                edLugar.setText(eventoLugar.getNomeLugar());
+            if(this.eventoLugar != null) {
+                this.edLugar.setText(this.eventoLugar.getNomeLugar());
             }
 
             if(eventoHorario != null) {
-                DateFormat df;
-
                 if(eventoHorario.getData_evento() == null) {
-                    radioBtnSemana.setChecked(true);
-                    chkDom.setChecked(eventoHorario.isRecDom());
-                    chkSeg.setChecked(eventoHorario.isRecSeg());
-                    chkTer.setChecked(eventoHorario.isRecTer());
-                    chkQua.setChecked(eventoHorario.isRecQua());
-                    chkQui.setChecked(eventoHorario.isRecQui());
-                    chkSex.setChecked(eventoHorario.isRecSex());
-                    chkSab.setChecked(eventoHorario.isRecSab());
+                    this.habilitarRadioSemana();
+                    this.chkDom.setChecked(this.eventoHorario.isRecDom());
+                    this.chkSeg.setChecked(this.eventoHorario.isRecSeg());
+                    this.chkTer.setChecked(this.eventoHorario.isRecTer());
+                    this.chkQua.setChecked(this.eventoHorario.isRecQua());
+                    this.chkQui.setChecked(this.eventoHorario.isRecQui());
+                    this.chkSex.setChecked(this.eventoHorario.isRecSex());
+                    this.chkSab.setChecked(this.eventoHorario.isRecSab());
                 } else {
-                    radioBtnData.setChecked(true);
-                    df = new SimpleDateFormat(EventoHorario.DATE_FORMAT);
-                    edData.setText(df.format(eventoHorario.getData_evento()));
+                    this.habilitarRadioData();
+                    this.edData.setText(EventoHorario.dataEventoToString(this.eventoHorario.getData_evento()));
                 }
 
-                df = new SimpleDateFormat(EventoHorario.HOUR_FORMAT);
-                ((EditText) findViewById(R.id.editText3)).setText(df.format(eventoHorario.getHorario()));
+                this.edHorario.setText(EventoHorario.horaToString(this.eventoHorario.getHorario()));
             } else {
-                radioBtnSemana.setEnabled(false);
-                radioBtnData.setEnabled(false);
-                edData.setEnabled(false);
+                this.habilitarHorario(false);
             }
         } else if (getIntent().getFlags() == INCLUIR) {
-            alarme = new Alarme();
-
-            btnExcluir.setEnabled(false);
-            radioBtnSemana.setEnabled(false);
-            radioBtnData.setEnabled(false);
-
-            edData.setEnabled(false);
-
-            eventoHorario = null;
-            eventoLugar = null;
+            this.alarme = new Alarme();
+            this.eventoLugar = null;
+            this.btnExcluir.setEnabled(false);
+            this.habilitarHorario(false);
         }
 
-        btnHorario.setOnClickListener(new View.OnClickListener() {
+        this.btnHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        eventoHorario = new EventoHorario();
+                        AlarmeActivity.this.habilitarHorario(true);
+                        String horario = String.format("%02d:%02d", hourOfDay, minute);
 
-                        SimpleDateFormat format = new SimpleDateFormat(EventoHorario.HOUR_FORMAT);
-                        String horario = String.valueOf(hourOfDay) + ":" + String.valueOf(minute);
                         try {
-                            eventoHorario.setHorario(format.parse(horario));
+                            AlarmeActivity.this.eventoHorario.setHorario(EventoHorario.stringToHora(horario));
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        edHorario.setText(horario);
-                        radioBtnSemana.setEnabled(true);
-                        radioBtnData.setEnabled(true);
+                        AlarmeActivity.this.edHorario.setText(horario);
                     }
                 };
                 TimePickerDialog timePickerDialog = new TimePickerDialog(AlarmeActivity.this, listener, 12, 0, true);
@@ -148,38 +153,12 @@ public class AlarmeActivity extends AppCompatActivity {
             }
         });
 
-        edData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        SimpleDateFormat format = new SimpleDateFormat(EventoHorario.DATE_FORMAT);
-                        String data = String.valueOf(year) + "/" + String.valueOf(dayOfMonth) + "/" + String.valueOf(year);
-                        try {
-                            eventoHorario.setHorario(format.parse(data));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        edData.setText(data);
-                    }
-                };
-                SimpleDateFormat format = new SimpleDateFormat(EventoHorario.DATE_FORMAT);
-                GregorianCalendar cal = new GregorianCalendar();
-
-                DatePickerDialog datePickerDialog =
-                        new DatePickerDialog(AlarmeActivity.this, listener, cal.get(Calendar.YEAR),
-                                cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.show();
-            }
-        });
-
-        btnLocal.setOnClickListener(new View.OnClickListener() {
+        this.btnLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(AlarmeActivity.this, LugarActivity.class);
 
-                if(eventoLugar != null) {
+                if(AlarmeActivity.this.eventoLugar != null) {
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(LugarActivity.LUGAR_KEY, eventoLugar);
 
@@ -193,83 +172,43 @@ public class AlarmeActivity extends AppCompatActivity {
             }
         });
 
-        btnSalvar.setOnClickListener(new View.OnClickListener() {
+        this.btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isOk = true;
 
-                CheckBox chkDom = (CheckBox) findViewById(R.id.checkBox);
-                CheckBox chkSeg = (CheckBox) findViewById(R.id.checkBox2);
-                CheckBox chkTer = (CheckBox) findViewById(R.id.checkBox3);
-                CheckBox chkQua = (CheckBox) findViewById(R.id.checkBox4);
-                CheckBox chkQui = (CheckBox) findViewById(R.id.checkBox5);
-                CheckBox chkSex = (CheckBox) findViewById(R.id.checkBox6);
-                CheckBox chkSab = (CheckBox) findViewById(R.id.checkBox7);
-                RadioButton radioBtnSemana = (RadioButton) findViewById(R.id.radio_btn_semana);
-                RadioButton radioBtnData = (RadioButton) findViewById(R.id.radio_btn_data);
-                TextView tvTitulo = (TextView) AlarmeActivity.this.findViewById(R.id.editText);
-                EditText edData = (EditText) findViewById(R.id.editText5);
-
-                if(tvTitulo.getText() == null || tvTitulo.getText().length() <= 0) {
-                    createAlert("O título do alarme está vazio.").show();
+                try {
+                    AlarmeActivity.this.validarCampos();
+                } catch (AlarmeActivityValidaException e) {
                     isOk = false;
-                } else if (eventoHorario == null && eventoLugar == null) {
-                    createAlert("Preencha o local ou o horário do alarme.").show();
-                    isOk = false;
-                } else if (eventoHorario != null) {
-                    if(radioBtnSemana.isChecked() && !chkDom.isChecked() && !chkSeg.isChecked() && !chkTer.isChecked() &&
-                            !chkQua.isChecked() && !chkQui.isChecked() && !chkSex.isChecked() &&
-                            !chkSab.isChecked()) {
-                        createAlert("Preencha pelo menos um dos checkbox de dias da semana.").show();
-                        isOk = false;
-                    } else if(radioBtnData.isChecked()) {
-                        if((edData.getText() == null || edData.getText().length() <= 0)) {
-                            createAlert("Preencha a data do alarme.").show();
-                            isOk = false;
-                        }
 
-                        try {
-                            SimpleDateFormat df = new SimpleDateFormat(EventoHorario.DATE_FORMAT);
-                            df.parse(edData.getText().toString());
-                        } catch (Exception e) {
-                            createAlert("Preencha a data com o formato correto (" + EventoHorario.DATE_FORMAT + ").").show();
-                            isOk = false;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AlarmeActivity.this);
+                    builder.setMessage(e.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
                         }
-                    }
+                    });
+                    builder.create().show();
                 }
 
                 if(isOk) {
-                    alarme.setTitulo(((TextView) AlarmeActivity.this.findViewById(R.id.editText)).getText().toString());
+                    AlarmeActivity.this.alarme.setTitulo(AlarmeActivity.this.tvTitulo.getText().toString());
 
-                    Evento evento = new Evento();
-
-                    if (eventoHorario != null) {
-                        if (radioBtnSemana.isChecked()) {
-                            eventoHorario.setRecDom(((CheckBox) AlarmeActivity.this.findViewById(R.id.checkBox)).isChecked());
-                            eventoHorario.setRecSeg(((CheckBox) AlarmeActivity.this.findViewById(R.id.checkBox2)).isChecked());
-                            eventoHorario.setRecTer(((CheckBox) AlarmeActivity.this.findViewById(R.id.checkBox3)).isChecked());
-                            eventoHorario.setRecQua(((CheckBox) AlarmeActivity.this.findViewById(R.id.checkBox4)).isChecked());
-                            eventoHorario.setRecQui(((CheckBox) AlarmeActivity.this.findViewById(R.id.checkBox5)).isChecked());
-                            eventoHorario.setRecSex(((CheckBox) AlarmeActivity.this.findViewById(R.id.checkBox6)).isChecked());
-                            eventoHorario.setRecSab(((CheckBox) AlarmeActivity.this.findViewById(R.id.checkBox7)).isChecked());
-                        } else if (radioBtnData.isChecked()) {
-                            SimpleDateFormat df = new SimpleDateFormat(EventoHorario.DATE_FORMAT);
-
-                            try {
-                                eventoHorario.setData_evento(df.parse(edData.getText().toString()));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                    if (AlarmeActivity.this.eventoHorario != null) {
+                        if (AlarmeActivity.this.radioBtnSemana.isChecked()) {
+                            AlarmeActivity.this.eventoHorario.setRecDom(AlarmeActivity.this.chkDom.isChecked());
+                            AlarmeActivity.this.eventoHorario.setRecSeg(AlarmeActivity.this.chkSeg.isChecked());
+                            AlarmeActivity.this.eventoHorario.setRecTer(AlarmeActivity.this.chkTer.isChecked());
+                            AlarmeActivity.this.eventoHorario.setRecQua(AlarmeActivity.this.chkQua.isChecked());
+                            AlarmeActivity.this.eventoHorario.setRecQui(AlarmeActivity.this.chkQui.isChecked());
+                            AlarmeActivity.this.eventoHorario.setRecSex(AlarmeActivity.this.chkSex.isChecked());
+                            AlarmeActivity.this.eventoHorario.setRecSab(AlarmeActivity.this.chkSab.isChecked());
                         }
-
-                        evento.setEventoHorario(eventoHorario);
                     }
 
-                    if (eventoLugar != null) {
-                        evento.setEventoLugar(eventoLugar);
-                    }
-
-                    alarme.setEventos(evento);
+                    AlarmeActivity.this.alarme.getEvento().setEventoLugar(eventoLugar);
+                    AlarmeActivity.this.alarme.getEvento().setEventoHorario(eventoHorario);
 
                     if (AlarmeActivity.this.getIntent().getFlags() == AlarmeActivity.EDITAR) {
                         alarmeDAO.atualizar(alarme);
@@ -293,7 +232,7 @@ public class AlarmeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(AlarmeActivity.this.getIntent().getFlags() == AlarmeActivity.EDITAR) {
-                    alarmeDAO.excluir(alarme);
+                    AlarmeActivity.this.alarmeDAO.excluir(AlarmeActivity.this.alarme);
                 }
                 AlarmeActivity.this.finish();
             }
@@ -302,41 +241,15 @@ public class AlarmeActivity extends AppCompatActivity {
         btnExcluirLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText edLugar = (EditText) findViewById(R.id.editText2);
-                edLugar.setText("");
-
-                eventoLugar = null;
+                AlarmeActivity.this.edLugar.setText("");
+                AlarmeActivity.this.eventoLugar = null;
             }
         });
 
         btnExcluirHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText edHorario = (EditText) findViewById(R.id.editText3);
-                edHorario.setText("");
-
-                CheckBox chkDom = (CheckBox) findViewById(R.id.checkBox);
-                CheckBox chkSeg = (CheckBox) findViewById(R.id.checkBox2);
-                CheckBox chkTer = (CheckBox) findViewById(R.id.checkBox3);
-                CheckBox chkQua = (CheckBox) findViewById(R.id.checkBox4);
-                CheckBox chkQui = (CheckBox) findViewById(R.id.checkBox5);
-                CheckBox chkSex = (CheckBox) findViewById(R.id.checkBox6);
-                CheckBox chkSab = (CheckBox) findViewById(R.id.checkBox7);
-                EditText edData = (EditText) findViewById(R.id.editText5);
-
-                chkDom.setChecked(false);
-                chkSeg.setChecked(false);
-                chkTer.setChecked(false);
-                chkQua.setChecked(false);
-                chkQui.setChecked(false);
-                chkSex.setChecked(false);
-                chkSab.setChecked(false);
-                edData.setText("");
-
-                eventoHorario = null;
-
-                radioBtnSemana.setEnabled(false);
-                radioBtnData.setEnabled(false);
+                AlarmeActivity.this.habilitarHorario(false);
             }
         });
     }
@@ -372,55 +285,130 @@ public class AlarmeActivity extends AppCompatActivity {
         }
     }
 
-    private AlertDialog createAlert(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(AlarmeActivity.this);
-        builder.setMessage(msg).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+    private void validarCampos() throws AlarmeActivityValidaException {
+        if(tvTitulo.getText() == null || tvTitulo.getText().length() <= 0) {
+            throw new AlarmeActivityValidaException("O título do alarme está vazio.");
+        }
+
+        if(eventoHorario == null && eventoLugar == null) {
+            throw new AlarmeActivityValidaException("Preencha o local ou o horário do alarme.");
+        }
+
+        if(this.eventoHorario != null) {
+            if(radioBtnSemana.isChecked() && !chkDom.isChecked() && !chkSeg.isChecked() && !chkTer.isChecked() &&
+                    !chkQua.isChecked() && !chkQui.isChecked() && !chkSex.isChecked() &&
+                    !chkSab.isChecked()) {
+                throw new AlarmeActivityValidaException("Preencha pelo menos um dos checkbox de dias da semana.");
+            } else if(radioBtnData.isChecked()) {
+                if(this.eventoHorario.getData_evento() == null) {
+                    throw new AlarmeActivityValidaException("Preencha a data do alarme.");
+                }
+                try {
+                    EventoHorario.stringToDataEvento(edData.getText().toString());
+                } catch (Exception e) {
+                    throw new AlarmeActivityValidaException("Preencha a data com o formato correto (" + EventoHorario.STRING_DATE_FORMAT + ").");
+                }
             }
-        });
-        return builder.create();
+        }
     }
 
     private void habilitarHorario(boolean habilitar) {
+        this.radioBtnSemana.setEnabled(habilitar);
+        this.radioBtnData.setEnabled(habilitar);
+        this.chkDom.setEnabled(habilitar);
+        this.chkSeg.setEnabled(habilitar);
+        this.chkTer.setEnabled(habilitar);
+        this.chkQua.setEnabled(habilitar);
+        this.chkQui.setEnabled(habilitar);
+        this.chkSex.setEnabled(habilitar);
+        this.chkSab.setEnabled(habilitar);
 
+        if(habilitar) {
+            this.eventoHorario = new EventoHorario();
+            this.edData.setText("");
+            habilitarRadioSemana();
+        } else {
+            this.eventoHorario = null;
+            this.radioBtnData.setChecked(false);
+            this.radioBtnSemana.setChecked(false);
+            this.chkDom.setChecked(false);
+            this.chkSeg.setChecked(false);
+            this.chkTer.setChecked(false);
+            this.chkQua.setChecked(false);
+            this.chkQui.setChecked(false);
+            this.chkSex.setChecked(false);
+            this.chkSab.setChecked(false);
+            this.edData.setText("");
+            this.edHorario.setText("");
+        }
+    }
+
+    private void habilitarRadioSemana() {
+        chkDom.setEnabled(true);
+        chkSeg.setEnabled(true);
+        chkTer.setEnabled(true);
+        chkQua.setEnabled(true);
+        chkQui.setEnabled(true);
+        chkSex.setEnabled(true);
+        chkSab.setEnabled(true);
+        radioBtnData.setChecked(false);
+        radioBtnSemana.setChecked(true);
+    }
+
+    private void habilitarRadioData() {
+        chkDom.setEnabled(false);
+        chkSeg.setEnabled(false);
+        chkTer.setEnabled(false);
+        chkQua.setEnabled(false);
+        chkQui.setEnabled(false);
+        chkSex.setEnabled(false);
+        chkSab.setEnabled(false);
+        radioBtnData.setChecked(true);
+        radioBtnSemana.setChecked(false);
     }
 
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
 
-        RadioButton radioBtnSemana = (RadioButton) findViewById(R.id.radio_btn_semana);
-        RadioButton radioBtnData = (RadioButton) findViewById(R.id.radio_btn_data);
-        CheckBox chkDom = (CheckBox) findViewById(R.id.checkBox);
-        CheckBox chkSeg = (CheckBox) findViewById(R.id.checkBox2);
-        CheckBox chkTer = (CheckBox) findViewById(R.id.checkBox3);
-        CheckBox chkQua = (CheckBox) findViewById(R.id.checkBox4);
-        CheckBox chkQui = (CheckBox) findViewById(R.id.checkBox5);
-        CheckBox chkSex = (CheckBox) findViewById(R.id.checkBox6);
-        CheckBox chkSab = (CheckBox) findViewById(R.id.checkBox7);
-        EditText edData = (EditText) findViewById(R.id.editText5);
-
         if(view.getId() == R.id.radio_btn_semana && checked) {
-            chkDom.setEnabled(true);
-            chkSeg.setEnabled(true);
-            chkTer.setEnabled(true);
-            chkQua.setEnabled(true);
-            chkQui.setEnabled(true);
-            chkSex.setEnabled(true);
-            chkSab.setEnabled(true);
-            edData.setEnabled(false);
-            radioBtnData.setChecked(false);
+            this.habilitarRadioSemana();
+            this.edData.setText("");
+            this.eventoHorario.setData_evento(null);
         } else if (view.getId() == R.id.radio_btn_data && checked) {
-            chkDom.setEnabled(false);
-            chkSeg.setEnabled(false);
-            chkTer.setEnabled(false);
-            chkQua.setEnabled(false);
-            chkQui.setEnabled(false);
-            chkSex.setEnabled(false);
-            chkSab.setEnabled(false);
-            edData.setEnabled(true);
-            radioBtnSemana.setChecked(false);
+            this.habilitarRadioData();
+            this.chkDom.setChecked(false);
+            this.chkSeg.setChecked(false);
+            this.chkTer.setChecked(false);
+            this.chkQua.setChecked(false);
+            this.chkQui.setChecked(false);
+            this.chkSex.setChecked(false);
+            this.chkSab.setChecked(false);
+
+            DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    String data = String.format("%02d/%02d/%04d", dayOfMonth, monthOfYear+1, year);
+                    try {
+                        AlarmeActivity.this.eventoHorario.setData_evento(EventoHorario.stringToDataEvento(data));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    AlarmeActivity.this.edData.setText(data);
+                }
+            };
+            GregorianCalendar cal = new GregorianCalendar();
+
+            DatePickerDialog datePickerDialog =
+                    new DatePickerDialog(AlarmeActivity.this, listener, cal.get(Calendar.YEAR),
+                            cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.show();
+        }
+    }
+
+    private class AlarmeActivityValidaException extends Exception {
+
+        public AlarmeActivityValidaException(String msg) {
+            super(msg);
         }
     }
 }

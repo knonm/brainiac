@@ -99,7 +99,8 @@
                             android:paddingLeft="-20dp"
                             android:singleLine="false"
                             android:clickable="true"
-                            android:visibility="visible" />
+                            android:visibility="visible"
+                            />
 
                         <CheckBox
                             android:layout_width="wrap_content"
@@ -224,7 +225,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="date"
-                        android:editable="false"
+                        android:enabled="false"
                         android:id="@+id/editText5"/>
                 </TableRow>
             </TableLayout>

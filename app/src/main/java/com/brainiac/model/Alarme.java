@@ -13,7 +13,7 @@ public class Alarme implements Parcelable {
     private String titulo;
 
     public Alarme() {
-        evento = null;
+        evento = new Evento();
     }
 
     public long getId() {

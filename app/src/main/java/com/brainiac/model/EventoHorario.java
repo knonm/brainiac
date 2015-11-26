@@ -3,6 +3,9 @@ package com.brainiac.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,8 +13,11 @@ import java.util.Date;
  */
 public class EventoHorario implements Parcelable {
 
-    public static final String DATE_FORMAT = "MM/dd/yyyy";
-    public static final String HOUR_FORMAT = "HH:mm";
+    public static final String STRING_DATE_FORMAT = "dd/MM/yyyy";
+    public static final String STRING_HOUR_FORMAT = "HH:mm";
+
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat(EventoHorario.STRING_DATE_FORMAT);
+    private static final DateFormat HOUR_FORMAT = new SimpleDateFormat(EventoHorario.STRING_HOUR_FORMAT);
 
     private long id;
     private Date data_evento;
@@ -113,6 +119,22 @@ public class EventoHorario implements Parcelable {
 
     public void setRecSab(boolean recSab) {
         this.recSab = recSab;
+    }
+
+    public static String horaToString(Date horario) {
+        return EventoHorario.HOUR_FORMAT.format(horario);
+    }
+
+    public static Date stringToHora(String horario) throws ParseException {
+        return EventoHorario.HOUR_FORMAT.parse(horario);
+    }
+
+    public static String dataEventoToString(Date data_evento) {
+        return EventoHorario.DATE_FORMAT.format(data_evento);
+    }
+
+    public static Date stringToDataEvento(String data_evento) throws ParseException {
+        return EventoHorario.DATE_FORMAT.parse(data_evento);
     }
 
     public static transient final Parcelable.Creator<EventoHorario> CREATOR = new Creator<EventoHorario>() {

@@ -25,19 +25,18 @@ public class EventoHorarioDAO {
 
     public long inserir(EventoHorario eventoHorario) {
         long idEventoHorario;
-        DateFormat df;
 
         ContentValues values = new ContentValues();
 
         if(eventoHorario.getData_evento() != null) {
-            df = new SimpleDateFormat(EventoHorario.DATE_FORMAT);
-            values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO, df.format(eventoHorario.getData_evento()));
+            values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO,
+                    EventoHorario.dataEventoToString(eventoHorario.getData_evento()));
         } else {
             values.putNull(BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO);
         }
 
-        df = new SimpleDateFormat(EventoHorario.HOUR_FORMAT);
-        values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_HORARIO, df.format(eventoHorario.getHorario()));
+        values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_HORARIO,
+                EventoHorario.horaToString(eventoHorario.getHorario()));
 
         values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_REC_DOM, eventoHorario.isRecDom()? 1 : 0);
         values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_REC_SEG, eventoHorario.isRecSeg()? 1 : 0);
@@ -69,17 +68,16 @@ public class EventoHorarioDAO {
 
     public void atualizar(EventoHorario eventoHorario) {
         ContentValues values = new ContentValues();
-        DateFormat df;
 
         if(eventoHorario.getData_evento() != null) {
-            df = new SimpleDateFormat(EventoHorario.DATE_FORMAT);
-            values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO, df.format(eventoHorario.getData_evento()));
+            values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO,
+                    EventoHorario.dataEventoToString(eventoHorario.getData_evento()));
         } else {
             values.putNull(BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO);
         }
 
-        df = new SimpleDateFormat(EventoHorario.HOUR_FORMAT);
-        values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_HORARIO, df.format(eventoHorario.getHorario()));
+        values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_HORARIO,
+                EventoHorario.horaToString(eventoHorario.getHorario()));
 
         values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_REC_DOM, eventoHorario.isRecDom()? 1 : 0);
         values.put(BrainiacContract.BDEventoHorario.COLUMN_NAME_REC_SEG, eventoHorario.isRecSeg()? 1 : 0);
@@ -100,8 +98,6 @@ public class EventoHorarioDAO {
     }
 
     public EventoHorario consultar(long id) {
-        DateFormat df;
-
         String[] projection = {
                 BrainiacContract.BDEventoHorario.COLUMN_NAME_ID,
                 BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO,
@@ -131,13 +127,11 @@ public class EventoHorarioDAO {
 
             eventoHorario.setId(c.getLong(c.getColumnIndexOrThrow(BrainiacContract.BDEventoHorario.COLUMN_NAME_ID)));
 
-            df = new SimpleDateFormat(EventoHorario.DATE_FORMAT);
-
             colInd = c.getColumnIndexOrThrow(BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO);
             try {
                 dataEvento = c.getString(colInd);
                 try {
-                    eventoHorario.setData_evento(df.parse(dataEvento));
+                    eventoHorario.setData_evento(EventoHorario.stringToDataEvento(dataEvento));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -145,9 +139,8 @@ public class EventoHorarioDAO {
                 eventoHorario.setData_evento(null);
             }
 
-            df = new SimpleDateFormat(EventoHorario.HOUR_FORMAT);
             try {
-                eventoHorario.setHorario(df.parse(c.getString(c.getColumnIndexOrThrow(BrainiacContract.BDEventoHorario.COLUMN_NAME_HORARIO))));
+                eventoHorario.setHorario(EventoHorario.stringToHora(c.getString(c.getColumnIndexOrThrow(BrainiacContract.BDEventoHorario.COLUMN_NAME_HORARIO))));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

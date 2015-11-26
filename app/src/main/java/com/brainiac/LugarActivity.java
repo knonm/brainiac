@@ -1,5 +1,7 @@
 package com.brainiac;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -35,7 +37,6 @@ public class LugarActivity extends AppCompatActivity implements GoogleApiClient.
 
     private MapFragment mapFragment;
     private Marker marker;
-
     private EditText edNomeLugar;
 
     private GoogleApiClient mGoogleApiClient;
@@ -59,7 +60,6 @@ public class LugarActivity extends AppCompatActivity implements GoogleApiClient.
             edNomeLugar.setText(eventoLugar.getNomeLugar());
         } else if (getIntent().getFlags() == INCLUIR) {
             eventoLugar = new EventoLugar();
-
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
@@ -92,21 +92,40 @@ public class LugarActivity extends AppCompatActivity implements GoogleApiClient.
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventoLugar.setNomeLugar(edNomeLugar.getText().toString());
-                eventoLugar.setLatitude((float) marker.getPosition().latitude);
-                eventoLugar.setLongitude((float) marker.getPosition().longitude);
+                boolean isOk = true;
 
-                Intent it = new Intent(LugarActivity.this, AlarmeActivity.class);
+                try {
+                    validarCampos();
+                } catch (LugarActivityValidaException e) {
+                    isOk = false;
 
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(LugarActivity.LUGAR_KEY, eventoLugar);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LugarActivity.this);
+                    builder.setMessage(e.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                }
 
-                it.putExtras(bundle);
-                it.setFlags(LugarActivity.RESULT_CODE_SALVAR);
+                if(isOk) {
+                    eventoLugar.setNomeLugar(edNomeLugar.getText().toString());
+                    eventoLugar.setLatitude((float) marker.getPosition().latitude);
+                    eventoLugar.setLongitude((float) marker.getPosition().longitude);
 
-                LugarActivity.this.setResult(LugarActivity.FLAG_ACTIVITY, it);
+                    Intent it = new Intent(LugarActivity.this, AlarmeActivity.class);
 
-                LugarActivity.this.finish();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(LugarActivity.LUGAR_KEY, eventoLugar);
+
+                    it.putExtras(bundle);
+                    it.setFlags(LugarActivity.RESULT_CODE_SALVAR);
+
+                    LugarActivity.this.setResult(LugarActivity.FLAG_ACTIVITY, it);
+
+                    LugarActivity.this.finish();
+                }
             }
         });
 
@@ -146,5 +165,18 @@ public class LugarActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    private void validarCampos() throws LugarActivityValidaException {
+        if(this.edNomeLugar.getText() == null || this.edNomeLugar.getText().length() <= 0) {
+            throw new LugarActivityValidaException("Preencha o nome do lugar escolhido.");
+        }
+    }
+
+    private class LugarActivityValidaException extends Exception {
+
+        public LugarActivityValidaException(String msg) {
+            super(msg);
+        }
     }
 }

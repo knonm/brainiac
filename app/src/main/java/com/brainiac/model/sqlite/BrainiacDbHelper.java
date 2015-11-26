@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class BrainiacDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "brainiac.db";
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 22;
 
     private static final String TB_EVENTO_LUGAR =
             "CREATE TABLE " + BrainiacContract.BDEventoLugar.TABLE_NAME + " (" +
@@ -23,7 +23,7 @@ public class BrainiacDbHelper extends SQLiteOpenHelper {
     private static final String TB_EVENTO_HORARIO =
             "CREATE TABLE " + BrainiacContract.BDEventoHorario.TABLE_NAME + " (" +
                     BrainiacContract.BDEventoHorario.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO + " TEXT NOT NULL, " +
+                    BrainiacContract.BDEventoHorario.COLUMN_NAME_DATA_EVENTO + " TEXT, " +
                     BrainiacContract.BDEventoHorario.COLUMN_NAME_HORARIO + " TEXT NOT NULL, " +
                     BrainiacContract.BDEventoHorario.COLUMN_NAME_REC_DOM + " INTEGER, " +
                     BrainiacContract.BDEventoHorario.COLUMN_NAME_REC_SEG + " INTEGER, " +
