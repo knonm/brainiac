@@ -37,12 +37,12 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/activity_alarme_lbl_titulo"
                 android:id="@+id/textView"
-                android:labelFor="@+id/editText"/>
+                android:labelFor="@+id/activity_alarme_txt_titulo"/>
 
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText"
+                android:id="@+id/activity_alarme_txt_titulo"
                 android:layout_weight="1"
                 android:inputType="text" />
         </LinearLayout>
@@ -193,7 +193,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/activity_alarme_lbl_data"
-                        android:id="@+id/radio_btn_data"
+                        android:id="@+id/activity_alarme_radio_btn_data"
                         android:onClick="onRadioButtonClicked"
                         android:checked="false"
                         android:labelFor="@+id/editText5"/>
@@ -233,6 +233,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="none"
+                android:enabled="false"
                 android:id="@+id/editText2"
                 android:layout_weight="0.63" />
 
@@ -241,7 +242,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/activity_alarme_btn_lugar"
-                android:id="@+id/button" />
+                android:id="@+id/activity_alarme_btn_lugar" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -272,6 +273,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:inputType="none"
+                android:enabled="false"
                 android:id="@+id/editText3"
                 android:layout_weight="1" />
 
@@ -280,7 +282,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/activity_alarme_btn_horario"
-                android:id="@+id/button2" />
+                android:id="@+id/activity_alarme_btn_horario" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -296,7 +298,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/activity_alarme_btn_salvar"
-        android:id="@+id/button3"
+        android:id="@+id/activity_alarme_btn_salvar"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="25dp"
         android:layout_alignWithParentIfMissing="true"
@@ -312,8 +314,8 @@
         android:layout_marginBottom="25dp"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_alignTop="@+id/button3"
-        android:layout_toEndOf="@+id/button3" />
+        android:layout_alignTop="@+id/activity_alarme_btn_salvar"
+        android:layout_toEndOf="@+id/activity_alarme_btn_salvar" />
 
     <Button
         android:layout_width="wrap_content"

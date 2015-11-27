@@ -4,6 +4,7 @@ import android.provider.BaseColumns;
 
 public final class BrainiacContract {
 
+    @SuppressWarnings("unused")
     public BrainiacContract() {
 
     }

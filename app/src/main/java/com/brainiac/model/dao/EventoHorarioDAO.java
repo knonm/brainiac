@@ -10,9 +10,9 @@ import com.brainiac.model.sqlite.BrainiacContract;
 
 import java.text.ParseException;
 
-public class EventoHorarioDAO {
+class EventoHorarioDAO {
 
-    private SQLiteOpenHelper dbHelper;
+    private final SQLiteOpenHelper dbHelper;
 
     public EventoHorarioDAO(SQLiteOpenHelper dbHelper) {
         this.dbHelper = dbHelper;

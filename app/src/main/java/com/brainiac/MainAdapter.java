@@ -14,15 +14,16 @@ import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
-    private List<Alarme> mDataset;
+    private final List<Alarme> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public View mView;
-        public TextView vAlarme;
+        @SuppressWarnings("unused")
+        public final View mView;
+        public final TextView vAlarme;
 
         public ViewHolder(View v) {
             super(v);

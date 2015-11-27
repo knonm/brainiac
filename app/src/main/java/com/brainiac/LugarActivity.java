@@ -30,7 +30,7 @@ public class LugarActivity extends AppCompatActivity implements GoogleApiClient.
 
     public static final int FLAG_ACTIVITY = 10;
     public static final int RESULT_CODE_SALVAR = 1;
-    public static final int RESULT_CODE_CANCELAR = 2;
+    private static final int RESULT_CODE_CANCELAR = 2;
     public static final int RESULT_CODE_EXCLUIR = 3;
 
     private EventoLugar eventoLugar;
@@ -175,7 +175,7 @@ public class LugarActivity extends AppCompatActivity implements GoogleApiClient.
 
     private class LugarActivityValidaException extends Exception {
 
-        public LugarActivityValidaException(String msg) {
+        public LugarActivityValidaException(@SuppressWarnings("SameParameterValue") String msg) {
             super(msg);
         }
     }

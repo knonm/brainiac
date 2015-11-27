@@ -12,7 +12,7 @@ import java.util.Date;
 public class EventoHorario implements Parcelable {
 
     public static final String STRING_DATE_FORMAT = "dd/MM/yyyy";
-    public static final String STRING_HOUR_FORMAT = "HH:mm";
+    private static final String STRING_HOUR_FORMAT = "HH:mm";
 
     @SuppressLint("SimpleDateFormat")
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat(EventoHorario.STRING_DATE_FORMAT);

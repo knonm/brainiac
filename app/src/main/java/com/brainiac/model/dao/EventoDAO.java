@@ -10,12 +10,12 @@ import com.brainiac.model.EventoHorario;
 import com.brainiac.model.EventoLugar;
 import com.brainiac.model.sqlite.BrainiacContract;
 
-public class EventoDAO {
+class EventoDAO {
 
-    private SQLiteOpenHelper dbHelper;
+    private final SQLiteOpenHelper dbHelper;
 
-    private EventoHorarioDAO eventoHorarioDAO;
-    private EventoLugarDAO eventoLugarDAO;
+    private final EventoHorarioDAO eventoHorarioDAO;
+    private final EventoLugarDAO eventoLugarDAO;
 
     public EventoDAO(SQLiteOpenHelper dbHelper) {
         this.dbHelper = dbHelper;

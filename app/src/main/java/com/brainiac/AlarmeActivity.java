@@ -42,6 +42,9 @@ public class AlarmeActivity extends AppCompatActivity {
     private EventoHorario eventoHorario;
     private EventoLugar eventoLugar;
 
+    // Para validacao nos casos de teste
+    private boolean isMsgErro;
+
     // UI
     private CheckBox chkDom;
     private CheckBox chkSeg;
@@ -56,6 +59,9 @@ public class AlarmeActivity extends AppCompatActivity {
     private RadioButton radioBtnSemana;
     private RadioButton radioBtnData;
     private TextView tvTitulo;
+
+    private TimePickerDialog timePickerDialog;
+    private DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +78,9 @@ public class AlarmeActivity extends AppCompatActivity {
         this.chkQui = (CheckBox) findViewById(R.id.checkBox5);
         this.chkSex = (CheckBox) findViewById(R.id.checkBox6);
         this.chkSab = (CheckBox) findViewById(R.id.checkBox7);
-        Button btnLocal = (Button) findViewById(R.id.button);
-        Button btnHorario = (Button) findViewById(R.id.button2);
-        Button btnSalvar = (Button) findViewById(R.id.button3);
+        Button btnLocal = (Button) findViewById(R.id.activity_alarme_btn_lugar);
+        Button btnHorario = (Button) findViewById(R.id.activity_alarme_btn_horario);
+        Button btnSalvar = (Button) findViewById(R.id.activity_alarme_btn_salvar);
         Button btnCancelar = (Button) findViewById(R.id.button4);
         Button btnExcluir = (Button) findViewById(R.id.button5);
         Button btnExcluirLocal = (Button) findViewById(R.id.button12);
@@ -83,8 +89,8 @@ public class AlarmeActivity extends AppCompatActivity {
         this.edLugar = (EditText) findViewById(R.id.editText2);
         this.edHorario = (EditText) findViewById(R.id.editText3);
         this.radioBtnSemana = (RadioButton) findViewById(R.id.radio_btn_semana);
-        this.radioBtnData = (RadioButton) findViewById(R.id.radio_btn_data);
-        this.tvTitulo = (TextView) AlarmeActivity.this.findViewById(R.id.editText);
+        this.radioBtnData = (RadioButton) findViewById(R.id.activity_alarme_radio_btn_data);
+        this.tvTitulo = (TextView) AlarmeActivity.this.findViewById(R.id.activity_alarme_txt_titulo);
 
         if(getIntent().getFlags() == EDITAR) {
             this.alarme = getIntent().getParcelableExtra(ALARME_KEY);
@@ -140,8 +146,8 @@ public class AlarmeActivity extends AppCompatActivity {
                         AlarmeActivity.this.edHorario.setText(horario);
                     }
                 };
-                TimePickerDialog timePickerDialog = new TimePickerDialog(AlarmeActivity.this, listener, 12, 0, true);
-                timePickerDialog.show();
+                AlarmeActivity.this.timePickerDialog = new TimePickerDialog(AlarmeActivity.this, listener, 12, 0, true);
+                AlarmeActivity.this.timePickerDialog.show();
             }
         });
 
@@ -167,12 +173,12 @@ public class AlarmeActivity extends AppCompatActivity {
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isOk = true;
+                AlarmeActivity.this.isMsgErro = false;
 
                 try {
                     AlarmeActivity.this.validarCampos();
                 } catch (AlarmeActivityValidaException e) {
-                    isOk = false;
+                    AlarmeActivity.this.isMsgErro = true;
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(AlarmeActivity.this);
                     builder.setMessage(e.getMessage()).setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -184,7 +190,7 @@ public class AlarmeActivity extends AppCompatActivity {
                     builder.create().show();
                 }
 
-                if (isOk) {
+                if (!AlarmeActivity.this.isMsgErro) {
                     AlarmeActivity.this.alarme.setTitulo(AlarmeActivity.this.tvTitulo.getText().toString());
 
                     if (AlarmeActivity.this.eventoHorario != null) {
@@ -359,6 +365,7 @@ public class AlarmeActivity extends AppCompatActivity {
         radioBtnSemana.setChecked(false);
     }
 
+    @SuppressWarnings("unused")
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
 
@@ -366,7 +373,7 @@ public class AlarmeActivity extends AppCompatActivity {
             this.habilitarRadioSemana();
             this.edData.setText("");
             this.eventoHorario.setData_evento(null);
-        } else if (view.getId() == R.id.radio_btn_data && checked) {
+        } else if (view.getId() == R.id.activity_alarme_radio_btn_data && checked) {
             this.habilitarRadioData();
             this.chkDom.setChecked(false);
             this.chkSeg.setChecked(false);
@@ -390,11 +397,23 @@ public class AlarmeActivity extends AppCompatActivity {
             };
             GregorianCalendar cal = new GregorianCalendar();
 
-            DatePickerDialog datePickerDialog =
+            this.datePickerDialog =
                     new DatePickerDialog(AlarmeActivity.this, listener, cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.show();
+            this.datePickerDialog.show();
         }
+    }
+
+    public DatePickerDialog getDatePickerDialog() {
+        return datePickerDialog;
+    }
+
+    public TimePickerDialog getTimePickerDialog() {
+        return timePickerDialog;
+    }
+
+    public boolean isMsgErro() {
+        return isMsgErro;
     }
 
     private class AlarmeActivityValidaException extends Exception {

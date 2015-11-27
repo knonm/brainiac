@@ -14,18 +14,17 @@ import java.util.List;
 
 public class AlarmeDAO {
 
-    private SQLiteOpenHelper dbHelper;
+    private final SQLiteOpenHelper dbHelper;
 
-    private EventoDAO eventoDAO;
+    private final EventoDAO eventoDAO;
 
     public AlarmeDAO(SQLiteOpenHelper dbHelper) {
         this.dbHelper = dbHelper;
         eventoDAO = new EventoDAO(this.dbHelper);
     }
 
-    public long inserir(Alarme alarme) {
+    public void inserir(Alarme alarme) {
         long idEvento = eventoDAO.inserir(alarme.getEvento());
-        long idAlarme;
 
         ContentValues values = new ContentValues();
         values.put(BrainiacContract.BDAlarme.COLUMN_NAME_ID_EVENTO, idEvento);
@@ -33,11 +32,9 @@ public class AlarmeDAO {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        idAlarme = db.insert(BrainiacContract.BDAlarme.TABLE_NAME, null, values);
+        db.insert(BrainiacContract.BDAlarme.TABLE_NAME, null, values);
 
         db.close();
-
-        return idAlarme;
     }
 
     public void excluir(Alarme alarme) {
@@ -69,6 +66,7 @@ public class AlarmeDAO {
         db.close();
     }
 
+    @SuppressWarnings("unused")
     private Alarme consultar(long id) {
         String[] projection = {
                 BrainiacContract.BDAlarme.COLUMN_NAME_ID,
