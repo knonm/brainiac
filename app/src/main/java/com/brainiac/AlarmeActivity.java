@@ -211,7 +211,7 @@ public class AlarmeActivity extends AppCompatActivity {
                     AlarmeActivity.this.alarme.getEvento().setEventoLugar(eventoLugar);
                     AlarmeActivity.this.alarme.getEvento().setEventoHorario(eventoHorario);
 
-                    if (AlarmeActivity.this.getIntent().getIntExtra(AlarmeActivity.INCLUIR_KEY, -1) == AlarmeActivity.EDITAR) {
+                    if (AlarmeActivity.this.getIntent().getIntExtra(AlarmeActivity.EDITAR_KEY, -1) == AlarmeActivity.EDITAR) {
                         alarmeDAO.atualizar(alarme);
                     } else if (AlarmeActivity.this.getIntent().getIntExtra(AlarmeActivity.INCLUIR_KEY, -1) == AlarmeActivity.INCLUIR) {
                         alarmeDAO.inserir(alarme);
@@ -233,7 +233,7 @@ public class AlarmeActivity extends AppCompatActivity {
         btnExcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AlarmeActivity.this.getIntent().getFlags() == AlarmeActivity.EDITAR) {
+                if (AlarmeActivity.this.getIntent().getIntExtra(AlarmeActivity.EDITAR_KEY, -1) == AlarmeActivity.EDITAR) {
                     AlarmeActivity.this.alarmeDAO.excluir(AlarmeActivity.this.alarme);
                 }
                 AlarmeActivity.this.finish();
