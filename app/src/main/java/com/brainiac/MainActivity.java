@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent it = new Intent(MainActivity.this, AlarmeActivity.class);
 
-                it.setFlags(AlarmeActivity.INCLUIR);
+                it.putExtra(AlarmeActivity.INCLUIR_KEY, AlarmeActivity.INCLUIR);
 
                 startActivity(it);
             }

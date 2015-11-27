@@ -31,7 +31,9 @@ import java.util.GregorianCalendar;
 public class AlarmeActivity extends AppCompatActivity {
 
     public static final String ALARME_KEY = "ALARME_KEY";
+    public static final String EDITAR_KEY = "EDITAR";
     public static final int EDITAR = 1;
+    public static final String INCLUIR_KEY = "INCLUIR";
     public static final int INCLUIR = 2;
 
     private SQLiteOpenHelper dbHelper;
@@ -44,6 +46,7 @@ public class AlarmeActivity extends AppCompatActivity {
 
     // Para validacao nos casos de teste
     private boolean isMsgErro;
+    private boolean isActive;
 
     // UI
     private CheckBox chkDom;
@@ -92,7 +95,7 @@ public class AlarmeActivity extends AppCompatActivity {
         this.radioBtnData = (RadioButton) findViewById(R.id.activity_alarme_radio_btn_data);
         this.tvTitulo = (TextView) AlarmeActivity.this.findViewById(R.id.activity_alarme_txt_titulo);
 
-        if(getIntent().getFlags() == EDITAR) {
+        if(getIntent().getIntExtra(AlarmeActivity.EDITAR_KEY, -1) == EDITAR) {
             this.alarme = getIntent().getParcelableExtra(ALARME_KEY);
             this.eventoLugar = this.alarme.getEvento().getEventoLugar();
             this.eventoHorario = this.alarme.getEvento().getEventoHorario();
@@ -122,7 +125,7 @@ public class AlarmeActivity extends AppCompatActivity {
             } else {
                 this.habilitarHorario(false);
             }
-        } else if (getIntent().getFlags() == INCLUIR) {
+        } else if (getIntent().getIntExtra(AlarmeActivity.INCLUIR_KEY, -1) == INCLUIR) {
             this.alarme = new Alarme();
             this.eventoLugar = null;
             btnExcluir.setEnabled(false);
@@ -208,12 +211,13 @@ public class AlarmeActivity extends AppCompatActivity {
                     AlarmeActivity.this.alarme.getEvento().setEventoLugar(eventoLugar);
                     AlarmeActivity.this.alarme.getEvento().setEventoHorario(eventoHorario);
 
-                    if (AlarmeActivity.this.getIntent().getFlags() == AlarmeActivity.EDITAR) {
+                    if (AlarmeActivity.this.getIntent().getIntExtra(AlarmeActivity.INCLUIR_KEY, -1) == AlarmeActivity.EDITAR) {
                         alarmeDAO.atualizar(alarme);
-                    } else if (AlarmeActivity.this.getIntent().getFlags() == AlarmeActivity.INCLUIR) {
+                    } else if (AlarmeActivity.this.getIntent().getIntExtra(AlarmeActivity.INCLUIR_KEY, -1) == AlarmeActivity.INCLUIR) {
                         alarmeDAO.inserir(alarme);
                     }
 
+                    AlarmeActivity.this.isActive = false;
                     AlarmeActivity.this.finish();
                 }
             }
@@ -255,6 +259,7 @@ public class AlarmeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        this.isActive = true;
         this.dbHelper = new BrainiacDbHelper(this);
         this.alarmeDAO = new AlarmeDAO(this.dbHelper);
     }
@@ -262,6 +267,7 @@ public class AlarmeActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        this.isActive = false;
         this.dbHelper.close();
     }
 
@@ -414,6 +420,10 @@ public class AlarmeActivity extends AppCompatActivity {
 
     public boolean isMsgErro() {
         return isMsgErro;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     private class AlarmeActivityValidaException extends Exception {

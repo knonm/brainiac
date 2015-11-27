@@ -60,7 +60,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(AlarmeActivity.ALARME_KEY, mDataset.get(pos));
                 it.putExtras(bundle);
-                it.setFlags(AlarmeActivity.EDITAR);
+                it.putExtra(AlarmeActivity.EDITAR_KEY, AlarmeActivity.EDITAR);
 
                 v.getContext().startActivity(it);
             }

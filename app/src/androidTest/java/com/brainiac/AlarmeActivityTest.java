@@ -1,10 +1,17 @@
 package com.brainiac;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Instrumentation;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
+import android.test.UiThreadTest;
+import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.MediumTest;
+import android.text.method.Touch;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -25,6 +32,9 @@ public class AlarmeActivityTest extends ActivityInstrumentationTestCase2<AlarmeA
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        Intent it = new Intent(getInstrumentation().getContext(), AlarmeActivity.class);
+        it.putExtra(AlarmeActivity.INCLUIR_KEY, AlarmeActivity.INCLUIR);
+        setActivityIntent(it);
         alarmeActivity = getActivity();
         edTitulo = (EditText) alarmeActivity.findViewById(R.id.activity_alarme_txt_titulo);
         btnSalvar = (Button) alarmeActivity.findViewById(R.id.activity_alarme_btn_salvar);
@@ -48,6 +58,7 @@ public class AlarmeActivityTest extends ActivityInstrumentationTestCase2<AlarmeA
                 edTitulo.requestFocus();
             }
         });
+
         getInstrumentation().waitForIdleSync();
         getInstrumentation().sendStringSync("");
         getInstrumentation().waitForIdleSync();
@@ -64,6 +75,7 @@ public class AlarmeActivityTest extends ActivityInstrumentationTestCase2<AlarmeA
                 edTitulo.requestFocus();
             }
         });
+
         getInstrumentation().waitForIdleSync();
         getInstrumentation().sendStringSync("TESTCASE");
         getInstrumentation().waitForIdleSync();
@@ -80,13 +92,12 @@ public class AlarmeActivityTest extends ActivityInstrumentationTestCase2<AlarmeA
                 edTitulo.requestFocus();
             }
         });
+
         getInstrumentation().waitForIdleSync();
         getInstrumentation().sendStringSync("TESTCASE");
         getInstrumentation().waitForIdleSync();
 
         TouchUtils.clickView(this, btnHorario);
-
-        alarmeActivity.getTimePickerDialog().updateTime(12, 0);
         TouchUtils.clickView(this, alarmeActivity.getTimePickerDialog().getButton(TimePickerDialog.BUTTON_POSITIVE));
 
         TouchUtils.clickView(this, btnSalvar);
@@ -101,20 +112,19 @@ public class AlarmeActivityTest extends ActivityInstrumentationTestCase2<AlarmeA
                 edTitulo.requestFocus();
             }
         });
+
         getInstrumentation().waitForIdleSync();
         getInstrumentation().sendStringSync("TESTCASE");
         getInstrumentation().waitForIdleSync();
 
         TouchUtils.clickView(this, btnHorario);
-
-        alarmeActivity.getTimePickerDialog().updateTime(12, 0);
-        TouchUtils.clickView(this, alarmeActivity.getTimePickerDialog().getButton(TimePickerDialog.BUTTON_POSITIVE));
+        TouchUtils.clickView(this, alarmeActivity.getTimePickerDialog().getButton(DialogInterface.BUTTON_POSITIVE));
 
         TouchUtils.clickView(this, radioBtnData);
-        alarmeActivity.getDatePickerDialog().updateDate(2000, 11, 4);
-        TouchUtils.clickView(this, alarmeActivity.getDatePickerDialog().getButton(DatePickerDialog.BUTTON_POSITIVE));
+        TouchUtils.clickView(this, alarmeActivity.getDatePickerDialog().getButton(DialogInterface.BUTTON_POSITIVE));
 
         TouchUtils.clickView(this, btnSalvar);
-        assertTrue(!alarmeActivity.isMsgErro());
+
+        assertFalse(alarmeActivity.isActive());
     }
 }
