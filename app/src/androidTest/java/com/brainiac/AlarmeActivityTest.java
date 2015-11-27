@@ -31,7 +31,7 @@ public class AlarmeActivityTest extends ActivityInstrumentationTestCase2<AlarmeA
 
     @Override
     public void setUp() throws Exception {
-        super.setUp();
+        super.setUp(); // Teste push
         Intent it = new Intent(getInstrumentation().getContext(), AlarmeActivity.class);
         it.putExtra(AlarmeActivity.INCLUIR_KEY, AlarmeActivity.INCLUIR);
         setActivityIntent(it);
